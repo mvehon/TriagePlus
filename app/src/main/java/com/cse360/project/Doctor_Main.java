@@ -211,7 +211,7 @@ public class Doctor_Main extends FragmentActivity implements
 			if(curView>0){
 				v = inflater.inflate(R.layout.pt_stub, container,
 						false);
-
+//
 				TextView pname = (TextView) v.findViewById(R.id.pname);
 				TextView ps1 = (TextView) v.findViewById(R.id.ps1);
 				TextView ps2 = (TextView) v.findViewById(R.id.ps2);
