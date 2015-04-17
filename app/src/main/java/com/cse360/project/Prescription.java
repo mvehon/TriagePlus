@@ -5,7 +5,7 @@ package com.cse360.project;
  */
 public class Prescription {
 
-
+//this is the prescription class that helps the prescirptionForm activity
     String rx_name;
     boolean allergies;
     boolean refil;
