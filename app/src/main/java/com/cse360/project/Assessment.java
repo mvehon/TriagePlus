@@ -77,7 +77,7 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         pslide1.setOnSeekBarChangeListener(this);
         pslide2.setOnSeekBarChangeListener(this);
 
-        //Instantiate layout object (test)
+        //Instantiate layout object ( test )
         LinearLayout submit = (LinearLayout) findViewById(R.id.submit);
 
         //Submit form here
