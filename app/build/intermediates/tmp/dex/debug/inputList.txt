@@ -1,10 +1,10 @@
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\classes\debug
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-d04e25325c38624c4dcb69f8ccfb153c7c82c468.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-12ac48520935dab823084fb2cd391df69ebfc930.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\activation-35e1b30d8eca0cb86affcbe7e8326c051ed5417f.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\additionnal-606636787d1abd41aaff6e3530b627612713007a.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-fe24c37cea57349f7a9b1440c67ed70d5882fb0e.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\classes-31625e9dc1267d11599ac993ce6d00fe9091abd7.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\mail-6bd8c04f3e21053ec43a2ebd75f7aee71d62768e.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\Parse-1.8.4-b4d740fbdfbf13c1372fd4d967b0d316e86eb871.jar
-C:\Users\Matthew\Dropbox\Workspace\Android Studio\CSE360Project\app\build\intermediates\pre-dexed\debug\classes-cf69ed588dde6275c85e2c48a23d4099a776941c.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\classes\debug
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-d04e25325c38624c4dcb69f8ccfb153c7c82c468.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-12ac48520935dab823084fb2cd391df69ebfc930.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\activation-af1c3a76317ab3e1dfc2a95213ed5f4e76253e2d.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\additionnal-8d276019e1dc513a6da31342f620f62bd640236c.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-01c4922b6383fce516ef5b02221016d39771546a.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\classes-2d10490b3f9c9e0dc022c1b5a6a872fd31d0ef85.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\mail-1a9b7fd0a5bab5ee1a99c871e9daf9d966f6e411.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\Parse-1.8.4-979fc5ef2a08d91695dee7d18dcb3955a28d2351.jar
+C:\Users\Matthew\AndroidstudioProjects\TriagePlus\app\build\intermediates\pre-dexed\debug\classes-064f7ea171444b49f88fcd04943f99f821465489.jar
