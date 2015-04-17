@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -43,7 +45,7 @@ public class Doctor_Main extends FragmentActivity implements
 	ViewPager mViewPager;
 	SharedPreferences prefs;
 	static Doctor curUser;
-	Context context;
+	static Context context;
 	static List<Patient> pts;
 	String username;
 	@Override
@@ -63,7 +65,7 @@ public class Doctor_Main extends FragmentActivity implements
 			e.printStackTrace();
 		}
 		pts = curUser.getPts();
-		
+		context = this;
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -162,18 +164,19 @@ public class Doctor_Main extends FragmentActivity implements
 		public int getCount() {
 			// Show 3 total pages.
             //return 3;
-			return pts.size();
+			return 2;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
-			//if(position==0){
-			//	return "My Info";
-			//}
-			//else{
-				return pts.get(position).getLastName() + ", " + pts.get(position).getFirstName();
-			//}
+			if(position==0){
+			    return "Critical Patients";
+			}
+			else{
+				//return pts.get(position).getLastName() + ", " + pts.get(position).getFirstName();
+			    return "Non-critical Patients";
+            }
 		}
 	}
 
@@ -208,7 +211,28 @@ public class Doctor_Main extends FragmentActivity implements
 			Bundle args = getArguments();
 			int curView = args.getInt(ARG_SECTION_NUMBER);
             Log.d("curView", Integer.toString(curView));
-			if(curView>0){
+            if(curView>0){
+                v = inflater.inflate(R.layout.patientslist, container,
+                        false);
+                LayoutInflater inflates=null;
+                try{inflates = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);}
+                catch(NullPointerException p){}
+                LinearLayout pt_ll = (LinearLayout) v.findViewById(R.id.pt_ll);
+
+                for(int i=0; i<pts.size();i++) {
+                    pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
+                }
+
+                LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearLayout);
+                linearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.startActivity(new Intent(context, PrescriptionForm.class));
+                    }
+                });
+            }
+			/*if(curView>0){
 				v = inflater.inflate(R.layout.pt_stub, container,
 						false);
 //
@@ -227,7 +251,7 @@ public class Doctor_Main extends FragmentActivity implements
 				stylize(ps1,symptom0);
 				stylize(ps2,symptom1);
 				stylize(ps3,symptom2);
-			}
+			}*/
 			//View rootView = inflater.inflate(R.layout.fragment_doctor__mains,
 			//		container, false);
 			//return rootView;

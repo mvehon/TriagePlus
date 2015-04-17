@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <RadioButton
+            android:id="@+id/rb_doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="Doctor" >
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/rb_patient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="Patient" >
+        </RadioButton>
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/form_frag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <EditText
+                android:id="@+id/first_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="8"
+                android:hint="First Name"
+                android:inputType="textPersonName"
+                android:nextFocusDown="@+id/last_name_txt"
+                android:layout_alignParentLeft="true">
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/last_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:hint="Last Name"
+                android:inputType="textPersonName"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/pw_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:layout_marginTop="15dp"            
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20dp"/>
+
+                <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="22dp"
+            android:id="@+id/doctor_ll">
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Doctor: "
+                        android:textSize="18dp"
+                        android:layout_marginRight="20dp"
+                        />
+
+            <Spinner
+            android:id="@+id/spin_doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:prompt="@string/spin_doctor_prompt"
+            android:spinnerMode="dialog"/>
+
+</LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue"
+        android:gravity="right|center_vertical"
+        android:id="@+id/submit">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Submit"
+            android:id="@+id/textView"
+            android:gravity="center_vertical"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/arrow_right"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="2dp"/>
+
+    </LinearLayout>
+</RelativeLayout><!-- From: file:/C:/Users/Matthew/Dropbox/Workspace/Android%20Studio/CSE360Project/app/src/main/res/layout/add_user.xml -->

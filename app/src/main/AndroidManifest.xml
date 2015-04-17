@@ -47,6 +47,10 @@
             android:name=".Patient_Main"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".PrescriptionForm"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

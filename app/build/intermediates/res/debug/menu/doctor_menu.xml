@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.cse360.project.Doctor_Mains" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/clear_data"
+        android:orderInCategory="10"
+        app:showAsAction="never"
+        android:title="Clear Data"/>
+
+</menu><!-- From: file:/C:/Users/Matthew/Dropbox/Workspace/Android%20Studio/CSE360Project/app/src/main/res/menu/doctor_menu.xml -->
