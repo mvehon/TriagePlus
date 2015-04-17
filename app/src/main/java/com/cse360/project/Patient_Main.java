@@ -10,5 +10,6 @@ public class Patient_Main extends Activity{
         setContentView(R.layout.thanks);
 
         //TODO THIS ONLY DISPLAYS SOME TEXT, NEEDS TO BE ABLE TO VIEW PATIENT INFO, FILL FORM, VIEW PRESCRIPTION
+        // Andriy's Comment 12:08
     }
 }
