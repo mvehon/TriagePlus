@@ -22,10 +22,10 @@ public class Start extends Activity {
 
 
         //THIS IS A TEST OBJECT FOR PARSE
-        ParseObject testObject = new ParseObject("TestObject");
+        /*ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
-
+        */
 
 		if(prefs.getBoolean("firsttime",true)){ //If this is the first time app has been opened, send to add user page
 			startActivity(new Intent(Start.this, AddUser.class));
