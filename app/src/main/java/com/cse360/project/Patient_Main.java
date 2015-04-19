@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Patient_Main extends Activity{
 
@@ -32,7 +33,7 @@ public class Patient_Main extends Activity{
             }
         });
 
-        //TODO ADD IN PRESCRIPTION-VIEWING (will try to do this Saturday 18th)
+        //TODO ADD IN PRESCRIPTION-VIEWING
 
     }
 
@@ -57,4 +58,6 @@ public class Patient_Main extends Activity{
         return true;
     }
 }
+
+
 
