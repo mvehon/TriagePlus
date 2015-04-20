@@ -48,7 +48,7 @@ public class Start extends Activity {
                 Start.this.finish();
             }
         }else{
-            startActivity(new Intent(Start.this, Login.class));
+            //startActivity(new Intent(Start.this, Login.class));
             Start.this.finish();
         }
 
