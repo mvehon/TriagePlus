@@ -20,6 +20,9 @@ import android.widget.Toast;
 import android.widget.SpinnerAdapter;
 import android.widget.ArrayAdapter;
 
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 public class AddUser extends Activity {
 	private SharedPreferences prefs;
     private LinearLayout form_frag, doctor_ll, submit;
@@ -128,6 +131,8 @@ public class AddUser extends Activity {
                                 curUser.getLastName() + curUser.getFirstName()).commit();
                         prefs.edit().putInt("user_type", 2).commit();
 
+                        createParseUser(true);
+
                     } else {
                         //If patient selected
 
@@ -160,6 +165,7 @@ public class AddUser extends Activity {
                                 curUser.getLastName() + curUser.getFirstName()).commit();
                         prefs.edit().putInt("user_type", 1).commit();
 
+                        createParseUser(false);
                     }
 
                     prefs.edit().putBoolean("firsttime", false).commit();
@@ -171,4 +177,25 @@ public class AddUser extends Activity {
 			}
 		});
 	}
+
+    public void createParseUser(Boolean isDoctor){
+        ParseUser user = new ParseUser();
+        user.setUsername(firstname.getText().toString()+lastname.getText().toString());
+        user.setPassword(password.getText().toString());
+        //user.setEmail(email.getText().toString());
+
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(com.parse.ParseException e) {
+                if (e == null) {
+                    // Hooray! Let them use the app now.
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                } else {
+                    // Sign up didn't succeed. Look at the ParseException
+                    // to figure out what went wrong
+                    int code = e.getCode();
+                }
+            }
+        });
+    }
 }

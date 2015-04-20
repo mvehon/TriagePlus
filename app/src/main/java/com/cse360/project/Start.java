@@ -33,7 +33,7 @@ public class Start extends Activity {
 		}
 		else if(prefs.getInt("user_type", 0)==1){ //If current user is a patient, send to patient activity
 			//This is where we would check the time against time of last assessment
-            startActivity(new Intent(Start.this, Assessment.class));
+            startActivity(new Intent(Start.this, Patient_Main.class));
 			Start.this.finish();
 		}
 		else if(prefs.getInt("user_type", 0)==2){ //If current user is a doctor, send to doctor activity

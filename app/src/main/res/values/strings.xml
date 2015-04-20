@@ -7,6 +7,7 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="spin_doctor_prompt">Choose a Doctor</string>
+    <string name="patient_main_text">Submit a symptom report</string>
 
     <string-array name="doctor_array">
         <item>Adams, Patch</item>
