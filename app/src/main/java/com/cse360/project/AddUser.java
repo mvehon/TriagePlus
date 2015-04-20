@@ -189,6 +189,25 @@ public class AddUser extends Activity {
                             Log.e("ERR", e.getMessage());
                         }
 
+                        curUser.createOnServer();
+                        derp = derp.substring(4);
+                        derp = derp.replaceAll("\\s+","");
+                        Log.d("derp", derp);
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
+                        query.whereEqualTo("username", derp);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                                if (e == null) {
+                                    if(parseObjects.size()>0){
+                                        ParseObject dr = parseObjects.get(0);
+                                       dr.add("ptusernames", firstname.getText().toString()+
+                                                lastname.getText().toString());
+                                       dr.saveInBackground();
+                                    }
+                                }
+                            }
+                        });
+
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
                                 curUser.getFirstName() + curUser.getLastName()).apply();

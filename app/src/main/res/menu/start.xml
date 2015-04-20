@@ -11,6 +11,11 @@
     <item
         android:id="@+id/clear_data"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="Clear Data"/>
+        android:title="Clear Data"
+        android:showAsAction="never"/>
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="100"
+        android:title="Log Out"
+        android:showAsAction="never"/>
 </menu>

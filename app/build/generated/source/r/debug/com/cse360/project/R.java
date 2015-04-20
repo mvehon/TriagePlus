@@ -989,6 +989,7 @@ containing a value of this type.
         public static final int linearSubmit=0x7f090060;
         public static final int listMode=0x7f090006;
         public static final int list_item=0x7f090029;
+        public static final int logout=0x7f090076;
         public static final int middle=0x7f090011;
         public static final int never=0x7f090016;
         public static final int none=0x7f090012;

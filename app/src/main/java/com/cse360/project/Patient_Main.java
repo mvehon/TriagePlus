@@ -55,6 +55,12 @@ public class Patient_Main extends Activity{
             Patient_Main.this.finish();
             return true;
         }
+        if (id == R.id.logout) {
+            prefs.edit().putBoolean("loggedin", false).commit();
+            startActivity(new Intent(Patient_Main.this, Start.class));
+            Patient_Main.this.finish();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 }

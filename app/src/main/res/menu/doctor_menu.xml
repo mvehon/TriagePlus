@@ -13,5 +13,10 @@
         android:orderInCategory="10"
         app:showAsAction="never"
         android:title="Clear Data"/>
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="100"
+        android:title="Log Out"
+        android:showAsAction="never"/>
 
 </menu>

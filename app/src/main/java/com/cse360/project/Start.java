@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseObject;
@@ -23,6 +24,9 @@ import java.util.List;
 
 public class Start extends Activity {
     SharedPreferences prefs;
+    EditText firstname, lastname, password;
+    CheckBox remember;
+    boolean found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +60,11 @@ public class Start extends Activity {
             //startActivity(new Intent(Start.this, Login.class));
             setContentView(R.layout.login);
 
-            final EditText firstname = (EditText) findViewById(R.id.textFirstName);
-            final EditText lastname = (EditText) findViewById(R.id.textLastName);
-            EditText password = (EditText) findViewById(R.id.password);
-            CheckBox remember = (CheckBox) findViewById(R.id.checkBoxRemember);
-            Button login = (Button) findViewById(R.id.button_login);
+            firstname = (EditText) findViewById(R.id.textFirstName);
+            lastname = (EditText) findViewById(R.id.textLastName);
+            password = (EditText) findViewById(R.id.password);
+            remember = (CheckBox) findViewById(R.id.checkBoxRemember);
+            final Button login = (Button) findViewById(R.id.button_login);
 
             remember.setChecked(prefs.getBoolean("remember", false));
             if (remember.isChecked()) {
@@ -72,23 +76,30 @@ public class Start extends Activity {
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String pt_type;
-                    if (prefs.getInt("user_type", 1) == 1) {
-                        pt_type = "Patient";
+                    if (checkServer("Patient")) {
+                        if(!prefs.getString("curUser","").equals(firstname.getText().toString()+lastname.getText().toString())){
+                            prefs.edit().putString("curUser", firstname.getText().toString()+lastname.getText().toString());
+                        }
+                        startActivity(new Intent(Start.this, Patient_Main.class));
+                        Start.this.finish();
+                    } else if (checkServer("Doctor")) {
+                        if(!prefs.getString("curUser","").equals(firstname.getText().toString()+lastname.getText().toString())){
+                            prefs.edit().putString("curUser", firstname.getText().toString()+lastname.getText().toString());
+                        }
+                        startActivity(new Intent(Start.this, Doctor_Main.class));
+                        Start.this.finish();
                     } else {
-                        pt_type = "Doctor";
+                        Toast.makeText(getApplicationContext(),"Incorrect user name or password", Toast.LENGTH_LONG).show();
                     }
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery(pt_type);
-                    query.whereEqualTo("username", firstname.getText().toString() + lastname.getText().toString());
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
-                            if (e == null) {
-                                Log.d("score", "Retrieved " + parseObjects.size() + " scores");
-                            } else {
-                                Log.d("score", "Error: " + e.getMessage());
+                    login.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(found){
+                                startActivity(new Intent(Start.this, Doctor_Main.class));
+                                Start.this.finish();
                             }
                         }
-                    });
+                    },1000);
                 }
             });
         }
@@ -128,6 +139,50 @@ public class Start extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.clear_data) {
+            prefs.edit().clear().commit();
+            Start.this.finish();
+            return true;
+        }
+        if (id == R.id.logout) {
+            prefs.edit().clear().commit();
+            prefs.edit().putBoolean("firsttime", false).commit();
+            startActivity(new Intent(Start.this, Start.class));
+            Start.this.finish();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean checkServer(String s) {
+        found = false;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(s);
+        query.whereEqualTo("username", firstname.getText().toString() + lastname.getText().toString());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                    if (parseObjects.size() == 0) {
+                    } else {
+                        Log.d("entered:", password.getText().toString());
+                        Log.d("server:",parseObjects.get(0).get("password").toString());
+                        if (password.getText().toString().equals(parseObjects.get(0).get("password").toString())) {
+                            Log.d("comp: ", "The same");
+                            prefs.edit().putBoolean("remember", remember.isChecked()).commit();
+                            found = true;
+                        } else {
+                            Log.d("comp: ", "Not the same");
+                        }
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                    //Toast.makeText(getApplicationContext(), "No user found with that name", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        if(found){
+            Toast.makeText(getApplicationContext(), "Found late", Toast.LENGTH_LONG).show();
+        }
+        return found;
     }
 }

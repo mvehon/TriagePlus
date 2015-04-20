@@ -34,6 +34,7 @@ public class Doctor implements Serializable {
         doc.put("first_name", first_name);
         doc.put("last_name", last_name);
         doc.put("password", password);
+        doc.put("username", first_name+last_name);
         doc.saveEventually();
     }
 
