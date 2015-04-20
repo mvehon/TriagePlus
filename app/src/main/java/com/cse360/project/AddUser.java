@@ -130,6 +130,11 @@ public class AddUser extends Activity {
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
                                 curUser.getFirstName()+curUser.getLastName()).commit();
+                        prefs.edit().putString("user_fn",
+                                curUser.getFirstName()).commit();
+                        prefs.edit().putString("user_ln",
+                                curUser.getLastName()).commit();
+                        prefs.edit().putString("user_pw", curUser.getPassword());
                         prefs.edit().putInt("user_type", 2).commit();
 
                         createParseUser(true);
@@ -164,7 +169,12 @@ public class AddUser extends Activity {
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
                                 curUser.getLastName() + curUser.getFirstName()).commit();
-                        prefs.edit().putInt("user_type", 1).commit();
+                        prefs.edit().putString("user_fn",
+                                curUser.getFirstName()).commit();
+                        prefs.edit().putString("user_ln",
+                                curUser.getLastName()).commit();
+                        prefs.edit().putString("user_pw", curUser.getPassword());
+                                prefs.edit().putInt("user_type", 1).commit();
 
                         createParseUser(false);
                     }

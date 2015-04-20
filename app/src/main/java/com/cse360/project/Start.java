@@ -5,14 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
-import com.parse.Parse;
+import com.parse.FindCallback;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
+import com.parse.ParseQuery;
+import java.text.ParseException;
+import java.util.List;
 
 
 public class Start extends Activity {
@@ -49,7 +54,41 @@ public class Start extends Activity {
             }
         }else{
             //startActivity(new Intent(Start.this, Login.class));
-            Start.this.finish();
+            setContentView(R.layout.login);
+
+            final EditText firstname = (EditText)findViewById(R.id.textFirstName);
+            final EditText lastname = (EditText)findViewById(R.id.textLastName);
+            EditText password = (EditText)findViewById(R.id.password);
+            CheckBox remember = (CheckBox)findViewById(R.id.checkBoxRemember);
+            Button login = (Button) findViewById(R.id.button_login);
+
+            remember.setChecked(prefs.getBoolean("remember", false));
+            if(remember.isChecked()){
+                firstname.setText(prefs.getString("user_fn", ""));
+                lastname.setText(prefs.getString("user_ln", ""));
+                password.setText(prefs.getString("user_pw", ""));
+            }
+
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String pt_type;
+                    if(prefs.getInt("user_type",1)==1){pt_type="Patient";}
+                    else{pt_type="Doctor";}
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery(pt_type);
+                    query.whereEqualTo("username", firstname.getText().toString()+lastname.getText().toString());
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> scoreList, ParseException e) {
+                            if (e == null) {
+                                Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                            } else {
+                                Log.d("score", "Error: " + e.getMessage());
+                            }
+                        }
+                    });
+                    //user.has(firstname.getText().toString()+lastname.getText().toString());
+                }
+            });
         }
 
 
