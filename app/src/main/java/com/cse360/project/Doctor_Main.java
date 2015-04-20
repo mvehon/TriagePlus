@@ -66,6 +66,7 @@ public class Doctor_Main extends FragmentActivity implements
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+        pts = new ArrayList<Patient>();
 		pts = curUser.getPts();
 		context = this;
 		// Set up the action bar.
@@ -119,13 +120,6 @@ public class Doctor_Main extends FragmentActivity implements
 		int id = item.getItemId();
 		if (id == R.id.clear_data) {
             prefs.edit().clear().commit();
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            currentUser.logOut();
-            try {
-                currentUser.delete();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
             Doctor_Main.this.finish();
             return true;
         }

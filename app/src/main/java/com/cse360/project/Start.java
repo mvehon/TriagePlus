@@ -16,18 +16,20 @@ import android.widget.EditText;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 import java.text.ParseException;
 import java.util.List;
 
 
 public class Start extends Activity {
-	SharedPreferences prefs;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		prefs = this.getSharedPreferences("com.cse360.project",
-				Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
+    SharedPreferences prefs;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        prefs = this.getSharedPreferences("com.cse360.project",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
 
 
         //THIS IS A TEST OBJECT FOR PARSE
@@ -36,34 +38,32 @@ public class Start extends Activity {
         testObject.saveInBackground();
         */
 
-		if(prefs.getBoolean("firsttime",true)){ //If this is the first time app has been opened, send to add user page
-			startActivity(new Intent(Start.this, AddUser.class));
-			Start.this.finish();
-		}
-
-        if(prefs.getBoolean("loggedin",false)){
-            if(prefs.getInt("user_type", 0)==2){
+        if (prefs.getBoolean("firsttime", true)) { //If this is the first time app has been opened, send to add user page
+            startActivity(new Intent(Start.this, AddUser.class));
+            Start.this.finish();
+        } else if (prefs.getBoolean("loggedin", false)) {
+            if (prefs.getInt("user_type", 0) == 2) {
                 startActivity(new Intent(Start.this, Doctor_Main.class));
                 Start.this.finish();
-            }else if(prefs.getInt("user_type", 0)==1){
+            } else if (prefs.getInt("user_type", 0) == 1) {
                 startActivity(new Intent(Start.this, Patient_Main.class));
                 Start.this.finish();
-            }else{
+            } else {
                 startActivity(new Intent(Start.this, AddUser.class));
                 Start.this.finish();
             }
-        }else{
+        } else {
             //startActivity(new Intent(Start.this, Login.class));
             setContentView(R.layout.login);
 
-            final EditText firstname = (EditText)findViewById(R.id.textFirstName);
-            final EditText lastname = (EditText)findViewById(R.id.textLastName);
-            EditText password = (EditText)findViewById(R.id.password);
-            CheckBox remember = (CheckBox)findViewById(R.id.checkBoxRemember);
+            final EditText firstname = (EditText) findViewById(R.id.textFirstName);
+            final EditText lastname = (EditText) findViewById(R.id.textLastName);
+            EditText password = (EditText) findViewById(R.id.password);
+            CheckBox remember = (CheckBox) findViewById(R.id.checkBoxRemember);
             Button login = (Button) findViewById(R.id.button_login);
 
             remember.setChecked(prefs.getBoolean("remember", false));
-            if(remember.isChecked()){
+            if (remember.isChecked()) {
                 firstname.setText(prefs.getString("user_fn", ""));
                 lastname.setText(prefs.getString("user_ln", ""));
                 password.setText(prefs.getString("user_pw", ""));
@@ -73,20 +73,22 @@ public class Start extends Activity {
                 @Override
                 public void onClick(View v) {
                     String pt_type;
-                    if(prefs.getInt("user_type",1)==1){pt_type="Patient";}
-                    else{pt_type="Doctor";}
+                    if (prefs.getInt("user_type", 1) == 1) {
+                        pt_type = "Patient";
+                    } else {
+                        pt_type = "Doctor";
+                    }
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(pt_type);
-                    query.whereEqualTo("username", firstname.getText().toString()+lastname.getText().toString());
+                    query.whereEqualTo("username", firstname.getText().toString() + lastname.getText().toString());
                     query.findInBackground(new FindCallback<ParseObject>() {
-                        public void done(List<ParseObject> scoreList, ParseException e) {
+                        public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                             if (e == null) {
-                                Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                                Log.d("score", "Retrieved " + parseObjects.size() + " scores");
                             } else {
                                 Log.d("score", "Error: " + e.getMessage());
                             }
                         }
                     });
-                    //user.has(firstname.getText().toString()+lastname.getText().toString());
                 }
             });
         }
@@ -108,24 +110,24 @@ public class Start extends Activity {
 			Start.this.finish();
 		}
 		*/
-	}
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.start, menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.start, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
