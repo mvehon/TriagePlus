@@ -19,6 +19,26 @@ public class Prescription {
         refil = false;
         fill_date = "";
     }
+    //@Override
+    public String toEmail(String patientName, String doctorName){
+        String email;
+        email = "Dear pharmacy,\n\n";
+        email = email + "The patient " + patientName + " was prescribed " + rx_name + " by " + doctorName + ".\n";
+        email = email + "It will start " + fill_date + " and will last " + duration + " days. \n";
+
+        if(allergies)
+            email += "The patient has allergies\n";
+        else
+            email += "The patient does not have allergies\n";
+
+        if(refil)
+            email += "The prescription is refillable\n";
+        else
+            email += "The prescription is not refillable\n";
+
+        email+= "\nHave a good day,\nTriage+";
+        return email;
+    }
 
     public int getDuration() {
         return duration;

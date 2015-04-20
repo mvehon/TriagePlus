@@ -93,8 +93,10 @@ public class PrescriptionForm extends Activity {
                             prescription1.setFill_date(dateCorrect);
                             prescription1.setDuration(Integer.parseInt(duration));
 
-                            //if(prescription1.isAllergies() && prescription1.isRefil())                            //this is just for testing
-                            //Toast.makeText(getBaseContext(), "Prescription Made" + dateCorrect, Toast.LENGTH_LONG).show();
+
+
+                            //if(1)                            //this is just for testing
+                            //Toast.makeText(getBaseContext(), prescription1.toEmail("Ebolaman", "Kody"), Toast.LENGTH_LONG).show();
                         }
                         else{
                             Toast.makeText(getBaseContext(), "The date seems to be filled out incorrectly", Toast.LENGTH_LONG).show();
