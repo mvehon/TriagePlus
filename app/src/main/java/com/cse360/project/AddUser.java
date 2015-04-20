@@ -65,7 +65,6 @@ public class AddUser extends Activity {
                     Log.d("score", "Retrieved " + parseObjects.size() + " names");
                     for(int i=0; i<parseObjects.size(); i++){
                         doctorList.add("Dr. " + parseObjects.get(i).get("first_name")+ " " + parseObjects.get(i).get("last_name"));
-                        Toast.makeText(getApplicationContext(), doctorList.get(i), Toast.LENGTH_SHORT).show();
                     }
                     ArrayAdapter<String> doc_adapter = new ArrayAdapter<String>(getBaseContext(),
                             android.R.layout.simple_spinner_item, doctorList);
