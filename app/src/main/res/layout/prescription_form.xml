@@ -11,7 +11,7 @@
         android:layout_height="70dp"
         android:background="@color/blue"
         android:gravity="right|center_vertical"
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearSubmit"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
@@ -44,26 +44,26 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Allergies"
-        android:id="@+id/checkBox"
+        android:text="Allergies"
+        android:id="@+id/allergiesCheck"
         android:checked="false"
         android:layout_marginBottom="58dp"
-        android:layout_above="@+id/linearLayout" />
+        android:layout_above="@+id/linearSubmit" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Refillable"
-        android:id="@+id/checkBox2"
+        android:id="@+id/refilCheck"
         android:checked="false"
-        android:layout_alignTop="@+id/checkBox"
+        android:layout_alignTop="@+id/allergiesCheck"
         android:layout_alignRight="@+id/textView4"
         android:layout_alignEnd="@+id/textView4" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/prescriptionText"
         android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="53dp"
@@ -74,8 +74,21 @@
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/dateText"
+        android:hint="Date (mm/dd/yy)"
+        android:layout_below="@+id/prescriptionText"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_marginTop="60dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/durText"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:hint="Prescription Duration" />
 
 </RelativeLayout>

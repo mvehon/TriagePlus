@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
 <ScrollView  android:layout_width="match_parent" android:layout_height="match_parent"
-    android:layout_above="@+id/linearLayout">
+    android:layout_above="@+id/linearSubmit">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/blue"
         android:gravity="right|center_vertical"
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearSubmit"
         android:layout_gravity="center_horizontal">
 
         <TextView

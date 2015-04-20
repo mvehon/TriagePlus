@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -224,7 +223,7 @@ public class Doctor_Main extends FragmentActivity implements
                     pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
                 }
 
-                LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearLayout);
+                LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearSubmit);
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -10,12 +10,22 @@ public class Prescription {
     boolean allergies;
     boolean refil;
     String fill_date;
+    int duration;
 
     public Prescription(){
 
         rx_name = "";
         allergies = false;
         refil = false;
+        fill_date = "";
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getRx_name() {
