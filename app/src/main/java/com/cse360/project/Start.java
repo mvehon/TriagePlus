@@ -7,8 +7,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 
 public class Start extends Activity {
@@ -31,7 +35,27 @@ public class Start extends Activity {
 			startActivity(new Intent(Start.this, AddUser.class));
 			Start.this.finish();
 		}
-		else if(prefs.getInt("user_type", 0)==1){ //If current user is a patient, send to patient activity
+
+        if(prefs.getBoolean("loggedin",false)){
+            if(prefs.getInt("user_type", 0)==2){
+                startActivity(new Intent(Start.this, Doctor_Main.class));
+                Start.this.finish();
+            }else if(prefs.getInt("user_type", 0)==1){
+                startActivity(new Intent(Start.this, Patient_Main.class));
+                Start.this.finish();
+            }else{
+                startActivity(new Intent(Start.this, AddUser.class));
+                Start.this.finish();
+            }
+        }else{
+            startActivity(new Intent(Start.this, Login.class));
+            Start.this.finish();
+        }
+
+
+
+    /*
+        else if(prefs.getInt("user_type", 0)==1){ //If current user is a patient, send to patient activity
 			//This is where we would check the time against time of last assessment
             startActivity(new Intent(Start.this, Patient_Main.class));
 			Start.this.finish();
@@ -44,6 +68,7 @@ public class Start extends Activity {
 			startActivity(new Intent(Start.this, AddUser.class));
 			Start.this.finish();
 		}
+		*/
 	}
 
 	@Override

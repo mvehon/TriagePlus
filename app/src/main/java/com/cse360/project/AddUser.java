@@ -20,6 +20,7 @@ import android.widget.Toast;
 import android.widget.SpinnerAdapter;
 import android.widget.ArrayAdapter;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -128,7 +129,7 @@ public class AddUser extends Activity {
 
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
-                                curUser.getLastName() + curUser.getFirstName()).commit();
+                                curUser.getFirstName()+curUser.getLastName()).commit();
                         prefs.edit().putInt("user_type", 2).commit();
 
                         createParseUser(true);
@@ -179,9 +180,11 @@ public class AddUser extends Activity {
 	}
 
     public void createParseUser(Boolean isDoctor){
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
         user.setUsername(firstname.getText().toString()+lastname.getText().toString());
         user.setPassword(password.getText().toString());
+        user.put("isDoctor", isDoctor);
+
         //user.setEmail(email.getText().toString());
 
         user.signUpInBackground(new SignUpCallback() {
@@ -190,6 +193,11 @@ public class AddUser extends Activity {
                 if (e == null) {
                     // Hooray! Let them use the app now.
                     ParseUser currentUser = ParseUser.getCurrentUser();
+                   /* try {
+                        user.logIn(user.getUsername(), password.getText().toString());
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    } */
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong

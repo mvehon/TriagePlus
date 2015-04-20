@@ -26,6 +26,9 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
 
+import com.parse.ParseException;
+import com.parse.ParseUser;
+
 public class Doctor_Main extends FragmentActivity implements
 		ActionBar.TabListener {
 
@@ -115,11 +118,17 @@ public class Doctor_Main extends FragmentActivity implements
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.clear_data) {
-			prefs.edit().clear().commit();
-			Doctor_Main.this.finish();
-			return true;
-		}
-		prefs.edit().clear().commit();
+            prefs.edit().clear().commit();
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.logOut();
+            try {
+                currentUser.delete();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Doctor_Main.this.finish();
+            return true;
+        }
 		return super.onOptionsItemSelected(item);
 	}
 
