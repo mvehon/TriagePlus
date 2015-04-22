@@ -156,13 +156,13 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         sliderStyle(seekBar, progress);
         switch(seekBar.getId()){
             case R.id.pslide0:
-                pslide0_txt.setText("Symptom 0: " + Integer.toString(progress+1));
+                pslide0_txt.setText("Head Pain: " + Integer.toString(progress+1));
                 break;
             case R.id.pslide1:
-                pslide1_txt.setText("Symptom 1: " + Integer.toString(progress+1));
+                pslide1_txt.setText("Nausea: " + Integer.toString(progress+1));
                 break;
             case R.id.pslide2:
-                pslide2_txt.setText("Symptom 2: " + Integer.toString(progress+1));
+                pslide2_txt.setText("Chest Pain: " + Integer.toString(progress+1));
                 break;
 
         }
