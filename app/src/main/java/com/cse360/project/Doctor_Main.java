@@ -263,6 +263,21 @@ public class Doctor_Main extends FragmentActivity implements
 
                 for (int i = 0; i < pts.size(); i++) {
                     pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
+                    LinearLayout pt_ll_inner = (LinearLayout)pt_ll.findViewById(R.id.pt_ll_inner);
+                    TextView pname = (TextView)pt_ll_inner.findViewById(R.id.pname);
+                    TextView ps1 = (TextView)pt_ll_inner.findViewById(R.id.ps1);
+                    TextView ps2 = (TextView)pt_ll_inner.findViewById(R.id.ps2);
+                    TextView ps3 = (TextView)pt_ll_inner.findViewById(R.id.ps3);
+
+                    pname.setText(pts.get(i).getFirstName() + " " + pts.get(i).getLastName());
+                    if(pts.get(i).getSymptom0().size()>0){
+                      ps1.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size()-1));
+                      ps2.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom1().size()-1));
+                      ps3.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom2().size()-1));
+                    }
+
+                    pt_ll_inner.setId(pt_ll.getChildCount());
+
                 }
 
                 LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearSubmit);
