@@ -94,9 +94,9 @@ public class PrescriptionForm extends Activity {
                             prescription1.setDuration(Integer.parseInt(duration));
 
 
-
+                            //this will print out a success message for a correct prescription
                             //if(1)                            //this is just for testing
-                            //Toast.makeText(getBaseContext(), prescription1.toEmail("Ebolaman", "Kody"), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), "Prescription successful!", Toast.LENGTH_LONG).show();
                         }
                         else{
                             Toast.makeText(getBaseContext(), "The date seems to be filled out incorrectly", Toast.LENGTH_LONG).show();
