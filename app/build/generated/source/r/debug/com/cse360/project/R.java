@@ -942,6 +942,7 @@ containing a value of this type.
         public static final int stripe_bg7=0x7f0200cd;
         public static final int stripe_bg9=0x7f0200ce;
         public static final int transparent=0x7f0200cf;
+        public static final int triageplus=0x7f0200d0;
     }
     public static final class id {
         public static final int action_bar=0x7f09001c;
@@ -955,7 +956,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f090001;
         public static final int action_menu_presenter=0x7f090002;
         public static final int action_mode_close_button=0x7f090024;
-        public static final int action_settings=0x7f090074;
+        public static final int action_settings=0x7f090075;
         public static final int activity_chooser_view_content=0x7f090025;
         public static final int allergiesCheck=0x7f090065;
         public static final int always=0x7f090013;
@@ -963,7 +964,7 @@ containing a value of this type.
         public static final int button_login=0x7f090057;
         public static final int checkBoxRemember=0x7f09005c;
         public static final int checkbox=0x7f09002d;
-        public static final int clear_data=0x7f090075;
+        public static final int clear_data=0x7f090076;
         public static final int collapseActionView=0x7f090014;
         public static final int dateText=0x7f090068;
         public static final int default_activity_button=0x7f090028;
@@ -989,7 +990,7 @@ containing a value of this type.
         public static final int linearSubmit=0x7f090060;
         public static final int listMode=0x7f090006;
         public static final int list_item=0x7f090029;
-        public static final int logout=0x7f090076;
+        public static final int logout=0x7f090077;
         public static final int middle=0x7f090011;
         public static final int never=0x7f090016;
         public static final int none=0x7f090012;
@@ -1045,6 +1046,7 @@ containing a value of this type.
         public static final int showHome=0x7f09000c;
         public static final int showTitle=0x7f09000d;
         public static final int spin_doctor=0x7f090045;
+        public static final int splashbg=0x7f090073;
         public static final int split_action_bar=0x7f09001e;
         public static final int submit=0x7f090046;
         public static final int submit_area=0x7f090039;
@@ -1053,7 +1055,7 @@ containing a value of this type.
         public static final int textLastName=0x7f090059;
         public static final int textView=0x7f090047;
         public static final int textView1=0x7f090044;
-        public static final int textView2=0x7f090073;
+        public static final int textView2=0x7f090074;
         public static final int textView3=0x7f090062;
         public static final int textView4=0x7f090064;
         public static final int textView5=0x7f09005b;
@@ -1101,8 +1103,9 @@ containing a value of this type.
         public static final int patientslist=0x7f03001e;
         public static final int prescription_form=0x7f03001f;
         public static final int pt_stub=0x7f030020;
-        public static final int support_simple_spinner_dropdown_item=0x7f030021;
-        public static final int thanks=0x7f030022;
+        public static final int splash=0x7f030021;
+        public static final int support_simple_spinner_dropdown_item=0x7f030022;
+        public static final int thanks=0x7f030023;
     }
     public static final class menu {
         public static final int doctor_menu=0x7f0d0000;
