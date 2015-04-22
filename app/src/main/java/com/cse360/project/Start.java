@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.text.ParseException;
 import java.util.List;
@@ -199,6 +200,28 @@ public class Start extends Activity {
     }
 
     public void loadPatientUser(){
-
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
+        query.whereEqualTo("username", prefs.getString("curUser",""));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                    if (parseObjects.size() > 0) {
+                        ParseObject temppt = parseObjects.get(0);
+                        Patient pt = new Patient();
+                        pt.setFirstName(temppt.get("first_name").toString());
+                        pt.setLastName(temppt.get("last_name").toString());
+                        pt.setPassword(temppt.get("password").toString());
+                        pt.setDoctor(temppt.get("doctor").toString());
+                        //pt.set
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                    //Toast.makeText(getApplicationContext(), "No user found with that name", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
+
+    public void loadDoctorUser(){}
 }
