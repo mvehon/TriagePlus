@@ -27,6 +27,7 @@ public class Start extends Activity {
     EditText firstname, lastname, password;
     CheckBox remember;
     boolean found;
+    String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,31 +76,48 @@ public class Start extends Activity {
 
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) {/*
                     if (checkServer("Patient")) {
-                        if(!prefs.getString("curUser","").equals(firstname.getText().toString()+lastname.getText().toString())){
-                            prefs.edit().putString("curUser", firstname.getText().toString()+lastname.getText().toString());
-                        }
+                        prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
+                        prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
+                        prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
+                        prefs.edit().putString("user_pw", password.getText().toString()).commit();
+                        prefs.edit().putInt("user_type", 1).commit();
                         startActivity(new Intent(Start.this, Patient_Main.class));
                         Start.this.finish();
                     } else if (checkServer("Doctor")) {
-                        if(!prefs.getString("curUser","").equals(firstname.getText().toString()+lastname.getText().toString())){
-                            prefs.edit().putString("curUser", firstname.getText().toString()+lastname.getText().toString());
-                        }
+                        prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
+                        prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
+                        prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
+                        prefs.edit().putString("user_pw", password.getText().toString()).commit();
+                        prefs.edit().putInt("user_type", 2).commit();
                         startActivity(new Intent(Start.this, Doctor_Main.class));
                         Start.this.finish();
                     } else {
-                        Toast.makeText(getApplicationContext(),"Incorrect user name or password", Toast.LENGTH_LONG).show();
-                    }
+                        //Toast.makeText(getApplicationContext(),"Incorrect user name or password", Toast.LENGTH_LONG).show();
+                    }*/
+                    checkServer("Patient");
+                    checkServer("Doctor");
                     login.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if(found){
-                                startActivity(new Intent(Start.this, Doctor_Main.class));
-                                Start.this.finish();
+                            if (found) {
+                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
+                                prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
+                                prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
+                                prefs.edit().putString("user_pw", password.getText().toString()).commit();
+                                if (type.equals("Patient")) {
+                                    prefs.edit().putInt("user_type", 1).commit();
+                                    startActivity(new Intent(Start.this, Patient_Main.class));
+                                    Start.this.finish();
+                                } else if (type.equals("Doctor")) {
+                                    prefs.edit().putInt("user_type", 2).commit();
+                                    startActivity(new Intent(Start.this, Doctor_Main.class));
+                                    Start.this.finish();
+                                }
                             }
                         }
-                    },1000);
+                    }, 1000);
                 }
             });
         }
@@ -154,8 +172,9 @@ public class Start extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean checkServer(String s) {
+    public void checkServer(final String s) {
         found = false;
+        final String temptype = s;
         ParseQuery<ParseObject> query = ParseQuery.getQuery(s);
         query.whereEqualTo("username", firstname.getText().toString() + lastname.getText().toString());
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -165,11 +184,12 @@ public class Start extends Activity {
                     if (parseObjects.size() == 0) {
                     } else {
                         Log.d("entered:", password.getText().toString());
-                        Log.d("server:",parseObjects.get(0).get("password").toString());
+                        Log.d("server:", parseObjects.get(0).get("password").toString());
                         if (password.getText().toString().equals(parseObjects.get(0).get("password").toString())) {
                             Log.d("comp: ", "The same");
                             prefs.edit().putBoolean("remember", remember.isChecked()).commit();
                             found = true;
+                            type = temptype;
                         } else {
                             Log.d("comp: ", "Not the same");
                         }
@@ -180,9 +200,5 @@ public class Start extends Activity {
                 }
             }
         });
-        if(found){
-            Toast.makeText(getApplicationContext(), "Found late", Toast.LENGTH_LONG).show();
-        }
-        return found;
     }
 }
