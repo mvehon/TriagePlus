@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -62,6 +63,7 @@ public class Doctor_Main extends FragmentActivity implements
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         username = prefs.getString("curUser", "");
+
         try {
             curUser = (Doctor) InternalStorage.readObject(getBaseContext(),
                     username);

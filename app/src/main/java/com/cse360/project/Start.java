@@ -102,18 +102,21 @@ public class Start extends Activity {
                         @Override
                         public void run() {
                             if (found) {
-                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
-                                prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
-                                prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
-                                prefs.edit().putString("user_pw", password.getText().toString()).commit();
+                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).apply();
+                                prefs.edit().putString("user_fn", firstname.getText().toString()).apply();
+                                prefs.edit().putString("user_ln", lastname.getText().toString()).apply();
+                                prefs.edit().putString("user_pw", password.getText().toString()).apply();
                                 if (type.equals("Patient")) {
-                                    prefs.edit().putInt("user_type", 1).commit();
+                                    loadPatientUser();
+                                    prefs.edit().putInt("user_type", 1).apply();
                                     startActivity(new Intent(Start.this, Patient_Main.class));
                                     Start.this.finish();
                                 } else if (type.equals("Doctor")) {
-                                    prefs.edit().putInt("user_type", 2).commit();
+                                    loadDoctorUser(); //This may not entirely work yet
+                                    prefs.edit().putInt("user_type", 2).apply();
+                                    Toast.makeText(getBaseContext(), prefs.getString("curUser",""), Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(Start.this, Doctor_Main.class));
-                                    Start.this.finish();
+                                    //Start.this.finish();
                                 }
                             }
                         }
@@ -249,7 +252,7 @@ public class Start extends Activity {
                             dr.setPassword(tempdr.get("password").toString());
                             //dr.setSymptom0((List<Integer>) temppt.getList("symptom0"));
                             //pt.setSymptom0(temppt.getList("symptom0"));
-
+/*
                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
                             query.whereEqualTo("username", prefs.getString("curUser",""));
                             query.findInBackground(new FindCallback<ParseObject>() {
@@ -275,7 +278,7 @@ public class Start extends Activity {
                                     }
                                 }
                             });
-
+*/
 
                             try {
                                 InternalStorage.writeObject(getBaseContext(), "curUser", dr);

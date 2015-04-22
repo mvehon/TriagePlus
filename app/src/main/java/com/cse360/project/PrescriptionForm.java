@@ -30,6 +30,7 @@ public class PrescriptionForm extends Activity {
     private boolean allergies1, refil1;
     private String dateString, dateCorrect, duration;
     private int monthCheck, dayCheck, yearCheck;
+    Doctor curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,15 @@ public class PrescriptionForm extends Activity {
         prefs = this.getSharedPreferences("com.cse360.project",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
+
+        curUser = new Doctor();
+        try {
+            curUser = (Doctor) InternalStorage.readObject(getBaseContext(),"curUser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         submit = (LinearLayout) findViewById(R.id.linearSubmit);
         prescription = (EditText) findViewById(R.id.prescriptionText);
@@ -93,10 +103,24 @@ public class PrescriptionForm extends Activity {
                             prescription1.setFill_date(dateCorrect);
                             prescription1.setDuration(Integer.parseInt(duration));
 
+                            Mail m = new Mail("triageplusapp@gmail.com", "cse360project");
+                            String[] toArr = {"poyopoyo91@gmail.com"};
+                            m.setTo(toArr);
+                            m.setBody(prescription1.toEmail("EbolaMan", curUser.toString()));
 
+                            try {
+                                if(m.send()) {
+                                    Toast.makeText(getBaseContext(), "Prescription successful!", Toast.LENGTH_LONG).show();
+                                    PrescriptionForm.this.finish();
+                                } else {
+                                    Toast.makeText(getBaseContext(), "Error here", Toast.LENGTH_LONG).show();
+                                }
+                            } catch(Exception e) {
+                                //Toast.makeText(MailApp.this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
+                                Log.e("MailApp", "Could not send message", e);
+                            }
                             //this will print out a success message for a correct prescription
                             //if(1)                            //this is just for testing
-                            Toast.makeText(getBaseContext(), "Prescription successful!", Toast.LENGTH_LONG).show();
                         }
                         else{
                             Toast.makeText(getBaseContext(), "The date seems to be filled out incorrectly", Toast.LENGTH_LONG).show();
