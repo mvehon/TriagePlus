@@ -1,6 +1,8 @@
 package com.cse360.project;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +22,9 @@ import android.widget.Toast;
 import android.widget.SpinnerAdapter;
 import android.widget.ArrayAdapter;
 
+import com.parse.FindCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -30,6 +35,7 @@ public class AddUser extends Activity {
     private RadioButton rb_doctor, rb_patient;
     private EditText lastname, firstname, password;
     private RadioGroup rg;
+    List<String> doctorList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +56,30 @@ public class AddUser extends Activity {
         lastname = (EditText) findViewById(R.id.last_name_txt);
         password = (EditText) findViewById(R.id.pw_txt);
         rg = (RadioGroup) findViewById(R.id.rg);
+        doctorList = new ArrayList<String>();
 
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + parseObjects.size() + " names");
+                    for(int i=0; i<parseObjects.size(); i++){
+                        doctorList.add("Dr. " + parseObjects.get(i).get("first_name")+ " " + parseObjects.get(i).get("last_name"));
+                    }
+                    ArrayAdapter<String> doc_adapter = new ArrayAdapter<String>(getBaseContext(),
+                            android.R.layout.simple_spinner_item, doctorList);
+                    spin_doctor.setAdapter(doc_adapter);
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
         //Create array adapter for doctor drop down menu
         SpinnerAdapter mSpinnerAdapter;
         mSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.doctor_array, android.R.layout.simple_spinner_dropdown_item);
         spin_doctor.setAdapter(mSpinnerAdapter);
+
+
 
         //Radio button selection listener
 		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -120,19 +145,23 @@ public class AddUser extends Activity {
                         try {
                             InternalStorage
                                     .writeObject(getBaseContext(),
-                                            curUser.getLastName() + curUser.getFirstName(),
+                                            curUser.getFirstName() + curUser.getLastName(),
                                             curUser);
                         } catch (IOException e) {
                             Log.e("ERR", e.getMessage());
                         }
 
+                        curUser.createOnServer();
+
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
-                                curUser.getLastName() + curUser.getFirstName()).commit();
-                        prefs.edit().putInt("user_type", 2).commit();
-
-                        createParseUser(true);
-
+                                curUser.getFirstName()+curUser.getLastName()).apply();
+                        prefs.edit().putString("user_fn",
+                                curUser.getFirstName()).apply();
+                        prefs.edit().putString("user_ln",
+                                curUser.getLastName()).apply();
+                        prefs.edit().putString("user_pw", curUser.getPassword());
+                        prefs.edit().putInt("user_type", 2).apply();
                     } else {
                         //If patient selected
 
@@ -154,21 +183,44 @@ public class AddUser extends Activity {
                         try {
                             InternalStorage
                                     .writeObject(getBaseContext(),
-                                            curUser.getLastName() + curUser.getFirstName(),
+                                            curUser.getFirstName() + curUser.getLastName(),
                                             curUser);
                         } catch (IOException e) {
                             Log.e("ERR", e.getMessage());
                         }
 
+                        curUser.createOnServer();
+                        derp = derp.substring(4);
+                        derp = derp.replaceAll("\\s+","");
+                        Log.d("derp", derp);
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
+                        query.whereEqualTo("username", derp);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                                if (e == null) {
+                                    if(parseObjects.size()>0){
+                                        ParseObject dr = parseObjects.get(0);
+                                       dr.add("ptusernames", firstname.getText().toString()+
+                                                lastname.getText().toString());
+                                       dr.saveInBackground();
+                                    }
+                                }
+                            }
+                        });
+
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
-                                curUser.getLastName() + curUser.getFirstName()).commit();
-                        prefs.edit().putInt("user_type", 1).commit();
-
-                        createParseUser(false);
+                                curUser.getFirstName() + curUser.getLastName()).apply();
+                        prefs.edit().putString("user_fn",
+                                curUser.getFirstName()).apply();
+                        prefs.edit().putString("user_ln",
+                                curUser.getLastName()).apply();
+                        prefs.edit().putString("user_pw", curUser.getPassword());
+                                prefs.edit().putInt("user_type", 1).apply();
                     }
 
-                    prefs.edit().putBoolean("firsttime", false).commit();
+                    prefs.edit().putBoolean("firsttime", false).apply();
+                    prefs.edit().putBoolean("loggedin", true).apply();
 
                     //Return to Start and close this activity
                     startActivity(new Intent(AddUser.this, Start.class));
@@ -179,9 +231,11 @@ public class AddUser extends Activity {
 	}
 
     public void createParseUser(Boolean isDoctor){
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
         user.setUsername(firstname.getText().toString()+lastname.getText().toString());
         user.setPassword(password.getText().toString());
+        user.put("isDoctor", isDoctor);
+
         //user.setEmail(email.getText().toString());
 
         user.signUpInBackground(new SignUpCallback() {
@@ -190,6 +244,11 @@ public class AddUser extends Activity {
                 if (e == null) {
                     // Hooray! Let them use the app now.
                     ParseUser currentUser = ParseUser.getCurrentUser();
+                   /* try {
+                        user.logIn(user.getUsername(), password.getText().toString());
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    } */
                 } else {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong

@@ -66,9 +66,9 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
 
 
         //Set the text of the initial seekbar level
-        pslide0_txt.setText("Symptom 0: " + Integer.toString(pslide0.getProgress()+1));
-        pslide1_txt.setText("Symptom 1: " + Integer.toString(pslide1.getProgress()+1));
-        pslide2_txt.setText("Symptom 2: " + Integer.toString(pslide2.getProgress()+1));
+        pslide0_txt.setText("Head Pain: " + Integer.toString(pslide0.getProgress()+1));
+        pslide1_txt.setText("Nausea: " + Integer.toString(pslide1.getProgress()+1));
+        pslide2_txt.setText("Chest Pain: " + Integer.toString(pslide2.getProgress()+1));
 
         //Set custom seekbar drawables
         pslide0.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_progress1));
@@ -89,8 +89,10 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
             public void onClick(View v) {
                 int painArray[] = {pslide0.getProgress(),pslide1.getProgress(),pslide2.getProgress()};
                 curUser.addValues(painArray);
+                curUser.updateOnServer();
                 //Close activity and start Patient_Main
                 startActivity(new Intent(Assessment.this, Patient_Main.class));
+
 
                 /*I was trying to add a "go back to homepage" button in thanks.xml along with a new
                    "thanks" activity to give the button an actionlistener, but the app kept crashing
@@ -154,13 +156,13 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         sliderStyle(seekBar, progress);
         switch(seekBar.getId()){
             case R.id.pslide0:
-                pslide0_txt.setText("Symptom 0: " + Integer.toString(progress+1));
+                pslide0_txt.setText("Head Pain: " + Integer.toString(progress+1));
                 break;
             case R.id.pslide1:
-                pslide1_txt.setText("Symptom 1: " + Integer.toString(progress+1));
+                pslide1_txt.setText("Nausea: " + Integer.toString(progress+1));
                 break;
             case R.id.pslide2:
-                pslide2_txt.setText("Symptom 2: " + Integer.toString(progress+1));
+                pslide2_txt.setText("Chest Pain: " + Integer.toString(progress+1));
                 break;
 
         }
@@ -196,7 +198,6 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
             Assessment.this.finish();
             return true;
         }
-        prefs.edit().clear().commit();
         return super.onOptionsItemSelected(item);
     }
 

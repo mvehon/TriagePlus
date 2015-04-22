@@ -5,20 +5,37 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.parse.Parse;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.parse.FindCallback;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.text.ParseException;
+import java.util.List;
 
 
 public class Start extends Activity {
-	SharedPreferences prefs;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		prefs = this.getSharedPreferences("com.cse360.project",
-				Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
+    SharedPreferences prefs;
+    EditText firstname, lastname, password;
+    CheckBox remember;
+    boolean found;
+    String type = "";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        prefs = this.getSharedPreferences("com.cse360.project",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
 
 
         //THIS IS A TEST OBJECT FOR PARSE
@@ -27,11 +44,84 @@ public class Start extends Activity {
         testObject.saveInBackground();
         */
 
-		if(prefs.getBoolean("firsttime",true)){ //If this is the first time app has been opened, send to add user page
-			startActivity(new Intent(Start.this, AddUser.class));
-			Start.this.finish();
-		}
-		else if(prefs.getInt("user_type", 0)==1){ //If current user is a patient, send to patient activity
+        if (prefs.getBoolean("firsttime", true)) { //If this is the first time app has been opened, send to add user page
+            startActivity(new Intent(Start.this, AddUser.class));
+            Start.this.finish();
+        } else if (prefs.getBoolean("loggedin", false)) {
+            setContentView(R.layout.splash);
+            LinearLayout splashbg = (LinearLayout)findViewById(R.id.splashbg);
+            if (prefs.getInt("user_type", 0) == 2) {
+                loadDoctorUser();
+                splashbg.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(Start.this, Doctor_Main.class));
+                        Start.this.finish();
+                    }
+                }, 2000);
+            } else if (prefs.getInt("user_type", 0) == 1) {
+                loadPatientUser();
+                splashbg.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(Start.this, Patient_Main.class));
+                        Start.this.finish();
+                    }
+                }, 2000);
+            } else {
+                startActivity(new Intent(Start.this, AddUser.class));
+                Start.this.finish();
+            }
+        } else {
+            //startActivity(new Intent(Start.this, Login.class));
+            setContentView(R.layout.login);
+
+            firstname = (EditText) findViewById(R.id.textFirstName);
+            lastname = (EditText) findViewById(R.id.textLastName);
+            password = (EditText) findViewById(R.id.password);
+            remember = (CheckBox) findViewById(R.id.checkBoxRemember);
+            final Button login = (Button) findViewById(R.id.button_login);
+
+            remember.setChecked(prefs.getBoolean("remember", false));
+            if (remember.isChecked()) {
+                firstname.setText(prefs.getString("user_fn", ""));
+                lastname.setText(prefs.getString("user_ln", ""));
+                password.setText(prefs.getString("user_pw", ""));
+            }
+
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkServer("Patient");
+                    checkServer("Doctor");
+                    login.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (found) {
+                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
+                                prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
+                                prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
+                                prefs.edit().putString("user_pw", password.getText().toString()).commit();
+                                if (type.equals("Patient")) {
+                                    prefs.edit().putInt("user_type", 1).commit();
+                                    startActivity(new Intent(Start.this, Patient_Main.class));
+                                    Start.this.finish();
+                                } else if (type.equals("Doctor")) {
+                                    prefs.edit().putInt("user_type", 2).commit();
+                                    startActivity(new Intent(Start.this, Doctor_Main.class));
+                                    Start.this.finish();
+                                }
+                            }
+                        }
+                    }, 1000);
+                }
+            });
+        }
+
+
+
+    /*
+        else if(prefs.getInt("user_type", 0)==1){ //If current user is a patient, send to patient activity
 			//This is where we would check the time against time of last assessment
             startActivity(new Intent(Start.this, Patient_Main.class));
 			Start.this.finish();
@@ -44,24 +134,71 @@ public class Start extends Activity {
 			startActivity(new Intent(Start.this, AddUser.class));
 			Start.this.finish();
 		}
-	}
+		*/
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.start, menu);
-		return true;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.start, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.clear_data) {
+            prefs.edit().clear().commit();
+            Start.this.finish();
+            return true;
+        }
+        if (id == R.id.logout) {
+            prefs.edit().clear().commit();
+            prefs.edit().putBoolean("firsttime", false).commit();
+            startActivity(new Intent(Start.this, Start.class));
+            Start.this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void checkServer(final String s) {
+        found = false;
+        final String temptype = s;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(s);
+        query.whereEqualTo("username", firstname.getText().toString() + lastname.getText().toString());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                if (e == null) {
+                    Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                    if (parseObjects.size() == 0) {
+                    } else {
+                        Log.d("entered:", password.getText().toString());
+                        Log.d("server:", parseObjects.get(0).get("password").toString());
+                        if (password.getText().toString().equals(parseObjects.get(0).get("password").toString())) {
+                            Log.d("comp: ", "The same");
+                            prefs.edit().putBoolean("remember", remember.isChecked()).commit();
+                            found = true;
+                            type = temptype;
+                        } else {
+                            Log.d("comp: ", "Not the same");
+                        }
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                    //Toast.makeText(getApplicationContext(), "No user found with that name", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    public void loadPatientUser(){
+
+    }
 }

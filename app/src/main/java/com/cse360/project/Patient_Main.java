@@ -37,6 +37,14 @@ public class Patient_Main extends Activity{
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.doctor_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -47,15 +55,13 @@ public class Patient_Main extends Activity{
             Patient_Main.this.finish();
             return true;
         }
-        prefs.edit().clear().commit();
+        if (id == R.id.logout) {
+            prefs.edit().putBoolean("loggedin", false).commit();
+            startActivity(new Intent(Patient_Main.this, Start.class));
+            Patient_Main.this.finish();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.patient_menu, menu);
-        return true;
     }
 }
 

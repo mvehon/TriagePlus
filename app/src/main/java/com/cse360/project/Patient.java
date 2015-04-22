@@ -1,7 +1,12 @@
 package com.cse360.project;
 
+import com.parse.FindCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Patient implements Serializable {
 	private String first_name;
@@ -19,11 +24,11 @@ public class Patient implements Serializable {
 		symptom2 = new ArrayList<Integer>();
 	}
 
-	public Patient(String fn, String ln, String pw, String doc) {
+	public Patient(String fn, String ln, String pw, String pt) {
 		first_name = fn;
 		last_name = ln;
 		password = pw;
-		doctor = doc;
+		doctor = pt;
 		symptom0 = new ArrayList<Integer>();
 		symptom1 = new ArrayList<Integer>();
 		symptom2 = new ArrayList<Integer>();
@@ -57,8 +62,8 @@ public class Patient implements Serializable {
 		password = pw;
 	}
 
-    public void setDoctor(String doc){
-		doctor = doc;
+    public void setDoctor(String pt){
+		doctor = pt;
 	}
 
     public ArrayList<Integer> getSymptom0(){
@@ -71,6 +76,36 @@ public class Patient implements Serializable {
         return symptom2;
     }
 
+    public void createOnServer() {
+        ParseObject pt = new ParseObject("Patient");
+        pt.put("first_name", first_name);
+        pt.put("last_name", last_name);
+        pt.put("password", password);
+        pt.put("username", first_name+last_name);
+        String tempdr = getDoctor();
+        tempdr = tempdr.substring(4);
+        tempdr = tempdr.replaceAll("\\s+","");
+        pt.put("doctor", tempdr);
+        pt.saveEventually();
+    }
+
+    public void updateOnServer(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
+        query.whereEqualTo("username", first_name+last_name);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                if (e == null) {
+                    if(parseObjects.size()>0){
+                        ParseObject pt = parseObjects.get(0);
+                        pt.add("symptom0", getSymptom0().get(getSymptom0().size()-1));
+                        pt.add("symptom1", getSymptom1().get(getSymptom1().size()-1));
+                        pt.add("symptom2", getSymptom2().get(getSymptom2().size()-1));
+                        pt.saveInBackground();
+                    }
+                }
+            }
+        });
+    }
 
 	public void addValues(int[] pains){
 		for(int i=0; i<pains.length;i++){
@@ -87,4 +122,9 @@ public class Patient implements Serializable {
 			}
 		}
 	}
+
+    @Override
+    public String toString() {
+        return first_name + " " + last_name;
+    }
 }

@@ -22,4 +22,4 @@
     <item android:state_enabled="true" android:drawable="@drawable/apptheme_textfield_default_holo_light" />
     <item android:state_focused="true" android:drawable="@drawable/apptheme_textfield_disabled_focused_holo_light" />
     <item android:drawable="@drawable/apptheme_textfield_disabled_holo_light" />
-</selector><!-- From: file:/C:/Users/Matthew/Dropbox/Workspace/Android%20Studio/CSE360Project/app/src/main/res/drawable/apptheme_edit_text_holo_light.xml -->
+</selector><!-- From: file:/C:/Users/Kody/Documents/CSE%20360/TriagePlus/app/src/main/res/drawable/apptheme_edit_text_holo_light.xml -->
