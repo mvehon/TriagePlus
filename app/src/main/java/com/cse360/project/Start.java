@@ -20,7 +20,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -213,15 +216,78 @@ public class Start extends Activity {
                         pt.setLastName(temppt.get("last_name").toString());
                         pt.setPassword(temppt.get("password").toString());
                         pt.setDoctor(temppt.get("doctor").toString());
-                        //pt.set
+                        //TODO get pain values and put them into array
+                        //TODO get prescriptions belonging to this patient
+                        //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
+                        //pt.setSymptom0(temppt.getList("symptom0"));
+                        try {
+                            InternalStorage.writeObject(getBaseContext(), "curUser", pt);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     }
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
-                    //Toast.makeText(getApplicationContext(), "No user found with that name", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-    public void loadDoctorUser(){}
+    public void loadDoctorUser(){
+        {
+            final Doctor dr = new Doctor();
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
+            query.whereEqualTo("username", prefs.getString("curUser",""));
+            query.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                    if (e == null) {
+                        Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                        if (parseObjects.size() > 0) {
+                            ParseObject tempdr = parseObjects.get(0);
+                            dr.setFirstName(tempdr.get("first_name").toString());
+                            dr.setLastName(tempdr.get("last_name").toString());
+                            dr.setPassword(tempdr.get("password").toString());
+                            //dr.setSymptom0((List<Integer>) temppt.getList("symptom0"));
+                            //pt.setSymptom0(temppt.getList("symptom0"));
+
+                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
+                            query.whereEqualTo("username", prefs.getString("curUser",""));
+                            query.findInBackground(new FindCallback<ParseObject>() {
+                                public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                                    if (e == null) {
+                                        Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                                        if (parseObjects.size() > 0) {
+                                            for(int i=0; i<parseObjects.size();i++){
+                                                ParseObject temppt = parseObjects.get(0);
+                                                Patient pt = new Patient();
+                                                pt.setFirstName(temppt.get("first_name").toString());
+                                                pt.setLastName(temppt.get("last_name").toString());
+                                                pt.setPassword(temppt.get("password").toString());
+                                                pt.setDoctor(temppt.get("doctor").toString());
+                                                //TODO get pain values and put them into array
+                                                //TODO get prescriptions belonging to this patient
+                                                //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
+                                                //pt.setSymptom0(temppt.getList("symptom0"));
+                                                dr.addPatient(pt);}
+                                        }
+                                    } else {
+                                        Log.d("score", "Error: " + e.getMessage());
+                                    }
+                                }
+                            });
+
+
+                            try {
+                                InternalStorage.writeObject(getBaseContext(), "curUser", dr);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    } else {
+                        Log.d("score", "Error: " + e.getMessage());
+                    }
+                }
+            });
+        }
+    }
 }

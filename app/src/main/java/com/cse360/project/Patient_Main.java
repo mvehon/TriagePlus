@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class Patient_Main extends Activity{
 
     SharedPreferences prefs;
     Button submitButton;
+    Patient curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,16 @@ public class Patient_Main extends Activity{
         prefs = this.getSharedPreferences("com.cse360.project",
                 Context.MODE_PRIVATE);
 
+        curUser = new Patient();
+        try {
+            curUser = (Patient) InternalStorage.readObject(this, "curUser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(this, curUser.getFirstName(), Toast.LENGTH_LONG).show();
         //Send user to assessment page on click of the button
         submitButton = (Button) findViewById(R.id.pmainbutton);
         submitButton.setOnClickListener(new View.OnClickListener() {

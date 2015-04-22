@@ -308,28 +308,28 @@ public class Doctor_Main extends FragmentActivity implements
 				stylize(ps2,symptom1);
 				stylize(ps3,symptom2);
 			}*/
-        //View rootView = inflater.inflate(R.layout.fragment_doctor__mains,
-        //		container, false);
-        //return rootView;
-        return v;
-    }
+            //View rootView = inflater.inflate(R.layout.fragment_doctor__mains,
+            //		container, false);
+            //return rootView;
+            return v;
+        }
 
-    public void stylize(TextView tx, ArrayList<Integer> ar) {
-        int dif = ar.get(ar.size() - 2) - ar.get(ar.size() - 1);
-        if (dif > 0) {
-            tx.setTextColor(getResources().getColor(R.color.green));
-            if (dif > 1) {
-                tx.setTypeface(null, Typeface.BOLD);
-            }
-        } else if (dif < 0) {
-            tx.setTextColor(getResources().getColor(R.color.red));
-            if (dif < -1) {
-                tx.setTypeface(null, Typeface.BOLD);
+        public void stylize(TextView tx, ArrayList<Integer> ar) {
+            int dif = ar.get(ar.size() - 2) - ar.get(ar.size() - 1);
+            if (dif > 0) {
+                tx.setTextColor(getResources().getColor(R.color.green));
+                if (dif > 1) {
+                    tx.setTypeface(null, Typeface.BOLD);
+                }
+            } else if (dif < 0) {
+                tx.setTextColor(getResources().getColor(R.color.red));
+                if (dif < -1) {
+                    tx.setTypeface(null, Typeface.BOLD);
+                }
             }
         }
-    }
 
-}
+    }
 /*
     public void addPatientInfo(ParseObject p) {
         List<String> ptusernames = new ArrayList<String>();

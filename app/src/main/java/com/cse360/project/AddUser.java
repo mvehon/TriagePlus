@@ -29,7 +29,7 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class AddUser extends Activity {
-	private SharedPreferences prefs;
+    private SharedPreferences prefs;
     private LinearLayout form_frag, doctor_ll, submit;
     private Spinner spin_doctor;
     private RadioButton rb_doctor, rb_patient;
@@ -37,18 +37,18 @@ public class AddUser extends Activity {
     private RadioGroup rg;
     List<String> doctorList;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_user);
-		prefs = this.getSharedPreferences("com.cse360.project",
-				Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs.edit();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_user);
+        prefs = this.getSharedPreferences("com.cse360.project",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
 
         //Assign to UI elements
-		form_frag = (LinearLayout) findViewById(R.id.form_frag);
-		doctor_ll = (LinearLayout) findViewById(R.id.doctor_ll);
-		spin_doctor = (Spinner) findViewById(R.id.spin_doctor);
+        form_frag = (LinearLayout) findViewById(R.id.form_frag);
+        doctor_ll = (LinearLayout) findViewById(R.id.doctor_ll);
+        spin_doctor = (Spinner) findViewById(R.id.spin_doctor);
         submit = (LinearLayout) findViewById(R.id.submit);
         rb_doctor = (RadioButton) findViewById(R.id.rb_doctor);
         rb_patient = (RadioButton) findViewById(R.id.rb_patient);
@@ -82,30 +82,30 @@ public class AddUser extends Activity {
 
 
         //Radio button selection listener
-		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				form_frag.setVisibility(View.VISIBLE);
-				submit.setVisibility(View.VISIBLE);
+        rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                form_frag.setVisibility(View.VISIBLE);
+                submit.setVisibility(View.VISIBLE);
 
-				switch (checkedId) {
-				case R.id.rb_doctor:
-                    //If doctor is selected, make spinner disappear
-					doctor_ll.setVisibility(View.GONE);
-					break;
-				case R.id.rb_patient:
-                    //If patient selected, make spinner appear
-					doctor_ll.setVisibility(View.VISIBLE);
-					break;
-				}
-			}
-		});
+                switch (checkedId) {
+                    case R.id.rb_doctor:
+                        //If doctor is selected, make spinner disappear
+                        doctor_ll.setVisibility(View.GONE);
+                        break;
+                    case R.id.rb_patient:
+                        //If patient selected, make spinner appear
+                        doctor_ll.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
 
         //Form submission
-		submit.setOnClickListener(new OnClickListener() {
+        submit.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 //Check to make sure fields are filled out
                 if(firstname.getText().length()<2 || lastname.getText().length()<2  || password.getText().length()<2 ){
                     //Display error message if forms not filled out
@@ -119,7 +119,7 @@ public class AddUser extends Activity {
                                 lastname.getText().toString(), password.getText()
                                 .toString());
 
-                        //For testing purposes, create 3 patients and assign them to this doctor
+                        /*For testing purposes, create 3 patients and assign them to this doctor
                         Patient tempPt = new Patient("Typhoid", "Mary", "", curUser.getLastName() + curUser.getFirstName());
                         int tempArr[] = {1, 2, 3};
                         tempPt.addValues(tempArr);
@@ -140,7 +140,7 @@ public class AddUser extends Activity {
                         int tempArr5[] = {8, 3, 1};
                         tempPt.addValues(tempArr5);
                         curUser.addPatient(tempPt);
-
+                        */
                         //Write to internal storage
                         try {
                             InternalStorage
@@ -155,13 +155,13 @@ public class AddUser extends Activity {
 
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
-                                curUser.getFirstName()+curUser.getLastName()).apply();
+                                curUser.getFirstName()+curUser.getLastName()).commit();
                         prefs.edit().putString("user_fn",
-                                curUser.getFirstName()).apply();
+                                curUser.getFirstName()).commit();
                         prefs.edit().putString("user_ln",
-                                curUser.getLastName()).apply();
+                                curUser.getLastName()).commit();
                         prefs.edit().putString("user_pw", curUser.getPassword());
-                        prefs.edit().putInt("user_type", 2).apply();
+                        prefs.edit().putInt("user_type", 2).commit();
                     } else {
                         //If patient selected
 
@@ -200,9 +200,9 @@ public class AddUser extends Activity {
                                 if (e == null) {
                                     if(parseObjects.size()>0){
                                         ParseObject dr = parseObjects.get(0);
-                                       dr.add("ptusernames", firstname.getText().toString()+
+                                        dr.add("ptusernames", firstname.getText().toString()+
                                                 lastname.getText().toString());
-                                       dr.saveInBackground();
+                                        dr.saveInBackground();
                                     }
                                 }
                             }
@@ -210,25 +210,30 @@ public class AddUser extends Activity {
 
                         //Save user type and reference string
                         prefs.edit().putString("curUser",
-                                curUser.getFirstName() + curUser.getLastName()).apply();
+                                curUser.getFirstName() + curUser.getLastName()).commit();
                         prefs.edit().putString("user_fn",
-                                curUser.getFirstName()).apply();
+                                curUser.getFirstName()).commit();
                         prefs.edit().putString("user_ln",
-                                curUser.getLastName()).apply();
+                                curUser.getLastName()).commit();
                         prefs.edit().putString("user_pw", curUser.getPassword());
-                                prefs.edit().putInt("user_type", 1).apply();
+                        prefs.edit().putInt("user_type", 1).commit();
                     }
 
-                    prefs.edit().putBoolean("firsttime", false).apply();
-                    prefs.edit().putBoolean("loggedin", true).apply();
+                    prefs.edit().putBoolean("firsttime", false).commit();
+                    prefs.edit().putBoolean("loggedin", true).commit();
 
                     //Return to Start and close this activity
-                    startActivity(new Intent(AddUser.this, Start.class));
+                    if(prefs.getInt("user_type",0)==1){
+                        startActivity(new Intent(AddUser.this, Patient_Main.class));
+                    }
+                    else if(prefs.getInt("user_type",0)==2){
+                        startActivity(new Intent(AddUser.this, Doctor_Main.class));
+                    }
                     AddUser.this.finish();
                 }
-			}
-		});
-	}
+            }
+        });
+    }
 
     public void createParseUser(Boolean isDoctor){
         final ParseUser user = new ParseUser();
