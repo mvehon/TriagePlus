@@ -66,9 +66,9 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
 
 
         //Set the text of the initial seekbar level
-        pslide0_txt.setText("Symptom 0: " + Integer.toString(pslide0.getProgress()+1));
-        pslide1_txt.setText("Symptom 1: " + Integer.toString(pslide1.getProgress()+1));
-        pslide2_txt.setText("Symptom 2: " + Integer.toString(pslide2.getProgress()+1));
+        pslide0_txt.setText("Head Pain: " + Integer.toString(pslide0.getProgress()+1));
+        pslide1_txt.setText("Nausea: " + Integer.toString(pslide1.getProgress()+1));
+        pslide2_txt.setText("Chest Pain: " + Integer.toString(pslide2.getProgress()+1));
 
         //Set custom seekbar drawables
         pslide0.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_progress1));
