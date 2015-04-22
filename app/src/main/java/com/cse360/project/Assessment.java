@@ -89,8 +89,10 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
             public void onClick(View v) {
                 int painArray[] = {pslide0.getProgress(),pslide1.getProgress(),pslide2.getProgress()};
                 curUser.addValues(painArray);
+                curUser.updateOnServer();
                 //Close activity and start Patient_Main
                 startActivity(new Intent(Assessment.this, Patient_Main.class));
+
 
                 /*I was trying to add a "go back to homepage" button in thanks.xml along with a new
                    "thanks" activity to give the button an actionlistener, but the app kept crashing
@@ -196,7 +198,6 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
             Assessment.this.finish();
             return true;
         }
-        prefs.edit().clear().commit();
         return super.onOptionsItemSelected(item);
     }
 
