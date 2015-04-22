@@ -63,43 +63,42 @@ public class Doctor_Main extends FragmentActivity implements
         SharedPreferences.Editor editor = prefs.edit();
         username = prefs.getString("curUser", "");
         try {
-			curUser = (Doctor) InternalStorage.readObject(getBaseContext(),
-					username);
-		} catch (ClassNotFoundException e) {
+            curUser = (Doctor) InternalStorage.readObject(getBaseContext(),
+                    username);
+        } catch (ClassNotFoundException e) {
             curUser = new Doctor();
-			e.printStackTrace();
-		} catch (IOException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             curUser = new Doctor();
-			e.printStackTrace();
-		} catch (ClassCastException e){
+            e.printStackTrace();
+        } catch (ClassCastException e) {
             curUser = new Doctor();
             e.printStackTrace();
         }
-
+        pts = new ArrayList<Patient>();
+        pts = curUser.getPts();
+/*
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
         query.whereEqualTo("username", prefs.getString("curUser", ""));
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if (e == null) {
-                    if(parseObjects.size()>0){
-                        if(curUser==null){
-                        curUser.setFirstName(parseObjects.get(0).get("first_name").toString());
-                        curUser.setLastName(parseObjects.get(0).get("last_name").toString());
-                        curUser.setPassword(parseObjects.get(0).get("first_name").toString());
-                        curUser.setFirstName(parseObjects.get(0).get("first_name").toString());
+                    if (parseObjects.size() > 0) {
+                        if (curUser == null) {
+                            curUser.setFirstName(parseObjects.get(0).get("first_name").toString());
+                            curUser.setLastName(parseObjects.get(0).get("last_name").toString());
+                            curUser.setPassword(parseObjects.get(0).get("first_name").toString());
+                            curUser.setFirstName(parseObjects.get(0).get("first_name").toString());
                         }
                         addPatientInfo(parseObjects.get(0));
                     }
-                }
-                else{
+                } else {
 
                 }
-             }
+            }
         });
-
-        pts = new ArrayList<Patient>();
-        pts = curUser.getPts();
+*/
         context = this;
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -259,36 +258,37 @@ public class Doctor_Main extends FragmentActivity implements
                             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 } catch (NullPointerException p) {
                 }
-                LinearLayout pt_ll = (LinearLayout) v.findViewById(R.id.pt_ll);
-
+                final LinearLayout pt_ll = (LinearLayout) v.findViewById(R.id.pt_ll);
                 for (int i = 0; i < pts.size(); i++) {
                     pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
-                    LinearLayout pt_ll_inner = (LinearLayout)pt_ll.findViewById(R.id.pt_ll_inner);
-                    TextView pname = (TextView)pt_ll_inner.findViewById(R.id.pname);
-                    TextView ps1 = (TextView)pt_ll_inner.findViewById(R.id.ps1);
-                    TextView ps2 = (TextView)pt_ll_inner.findViewById(R.id.ps2);
-                    TextView ps3 = (TextView)pt_ll_inner.findViewById(R.id.ps3);
+                    LinearLayout pt_ll_inner = (LinearLayout) pt_ll.findViewById(R.id.pt_ll_inner);
+                    TextView pname = (TextView) pt_ll_inner.findViewById(R.id.pname);
+                    TextView ps1 = (TextView) pt_ll_inner.findViewById(R.id.ps1);
+                    TextView ps2 = (TextView) pt_ll_inner.findViewById(R.id.ps2);
+                    TextView ps3 = (TextView) pt_ll_inner.findViewById(R.id.ps3);
 
                     pname.setText(pts.get(i).getFirstName() + " " + pts.get(i).getLastName());
-                    if(pts.get(i).getSymptom0().size()>0){
-                      ps1.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size()-1));
-                      ps2.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom1().size()-1));
-                      ps3.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom2().size()-1));
+                    if (pts.get(i).getSymptom0().size() > 0) {
+                        ps1.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1));
+                        ps2.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom1().size() - 1));
+                        ps3.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom2().size() - 1));
                     }
 
                     pt_ll_inner.setId(pt_ll.getChildCount());
 
                 }
-
-                LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearSubmit);
-                linearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        context.startActivity(new Intent(context, PrescriptionForm.class));
-                    }
-                });
             }
-			/*if(curView>0){
+
+
+            LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearSubmit);
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(context, PrescriptionForm.class));
+                }
+            });
+
+            /*if(curView>0){
 				v = inflater.inflate(R.layout.pt_stub, container,
 						false);
 //
@@ -308,45 +308,53 @@ public class Doctor_Main extends FragmentActivity implements
 				stylize(ps2,symptom1);
 				stylize(ps3,symptom2);
 			}*/
-            //View rootView = inflater.inflate(R.layout.fragment_doctor__mains,
-            //		container, false);
-            //return rootView;
-            return v;
-        }
+        //View rootView = inflater.inflate(R.layout.fragment_doctor__mains,
+        //		container, false);
+        //return rootView;
+        return v;
+    }
 
-        public void stylize(TextView tx, ArrayList<Integer> ar) {
-            int dif = ar.get(ar.size() - 2) - ar.get(ar.size() - 1);
-            if (dif > 0) {
-                tx.setTextColor(getResources().getColor(R.color.green));
-                if (dif > 1) {
-                    tx.setTypeface(null, Typeface.BOLD);
-                }
-            } else if (dif < 0) {
-                tx.setTextColor(getResources().getColor(R.color.red));
-                if (dif < -1) {
-                    tx.setTypeface(null, Typeface.BOLD);
-                }
+    public void stylize(TextView tx, ArrayList<Integer> ar) {
+        int dif = ar.get(ar.size() - 2) - ar.get(ar.size() - 1);
+        if (dif > 0) {
+            tx.setTextColor(getResources().getColor(R.color.green));
+            if (dif > 1) {
+                tx.setTypeface(null, Typeface.BOLD);
+            }
+        } else if (dif < 0) {
+            tx.setTextColor(getResources().getColor(R.color.red));
+            if (dif < -1) {
+                tx.setTypeface(null, Typeface.BOLD);
             }
         }
     }
 
-    public void addPatientInfo(ParseObject p){
+}
+/*
+    public void addPatientInfo(ParseObject p) {
         List<String> ptusernames = new ArrayList<String>();
         ptusernames = p.getList("ptusernames");
-        for(int i=0; i<ptusernames.size();i++){
+        for (int i = 0; i < ptusernames.size(); i++) {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
             query.whereEqualTo("username", prefs.getString("curUser", ""));
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> parseObjects, ParseException e) {
                     if (e == null) {
-                        if(parseObjects.size()>0){
-                            Patient pt = new Patient();
+                        if (parseObjects.size() > 0) {
+                            //TODO pull patients from the server here
+                            for (int i = 0; i < parseObjects.size(); i++) {
+                                Patient pt = new Patient();
+                                pt.setFirstName(parseObjects.get(i).get("first_name").toString());
+                                pt.setLastName(parseObjects.get(i).get("last_name").toString());
+                                curUser.addPatient(pt);
+                            }
+                            pts = curUser.getPts();
                         }
                     }
                 }
             });
         }
     }
-
+*/
 }
