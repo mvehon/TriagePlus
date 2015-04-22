@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -47,12 +48,26 @@ public class Start extends Activity {
             startActivity(new Intent(Start.this, AddUser.class));
             Start.this.finish();
         } else if (prefs.getBoolean("loggedin", false)) {
+            setContentView(R.layout.splash);
+            LinearLayout splashbg = (LinearLayout)findViewById(R.id.splashbg);
             if (prefs.getInt("user_type", 0) == 2) {
-                startActivity(new Intent(Start.this, Doctor_Main.class));
-                Start.this.finish();
+                loadDoctorUser();
+                splashbg.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(Start.this, Doctor_Main.class));
+                        Start.this.finish();
+                    }
+                }, 2000);
             } else if (prefs.getInt("user_type", 0) == 1) {
-                startActivity(new Intent(Start.this, Patient_Main.class));
-                Start.this.finish();
+                loadPatientUser();
+                splashbg.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(Start.this, Patient_Main.class));
+                        Start.this.finish();
+                    }
+                }, 2000);
             } else {
                 startActivity(new Intent(Start.this, AddUser.class));
                 Start.this.finish();
@@ -76,26 +91,7 @@ public class Start extends Activity {
 
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {/*
-                    if (checkServer("Patient")) {
-                        prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
-                        prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
-                        prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
-                        prefs.edit().putString("user_pw", password.getText().toString()).commit();
-                        prefs.edit().putInt("user_type", 1).commit();
-                        startActivity(new Intent(Start.this, Patient_Main.class));
-                        Start.this.finish();
-                    } else if (checkServer("Doctor")) {
-                        prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
-                        prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
-                        prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
-                        prefs.edit().putString("user_pw", password.getText().toString()).commit();
-                        prefs.edit().putInt("user_type", 2).commit();
-                        startActivity(new Intent(Start.this, Doctor_Main.class));
-                        Start.this.finish();
-                    } else {
-                        //Toast.makeText(getApplicationContext(),"Incorrect user name or password", Toast.LENGTH_LONG).show();
-                    }*/
+                public void onClick(View v) {
                     checkServer("Patient");
                     checkServer("Doctor");
                     login.postDelayed(new Runnable() {
@@ -200,5 +196,9 @@ public class Start extends Activity {
                 }
             }
         });
+    }
+
+    public void loadPatientUser(){
+
     }
 }
