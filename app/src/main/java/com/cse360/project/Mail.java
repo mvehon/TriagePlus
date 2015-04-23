@@ -1,6 +1,8 @@
 package com.cse360.project;
 
-import java.util.Date; 
+import android.os.StrictMode;
+
+import java.util.Date;
 import java.util.Properties; 
 import javax.activation.CommandMap; 
 import javax.activation.DataHandler; 
@@ -42,14 +44,14 @@ public class Mail extends javax.mail.Authenticator {
  
   public Mail() { 
     _host = "smtp.gmail.com"; // default smtp server 
-    _port = "465"; // default smtp port 
-    _sport = "465"; // default socketfactory port 
+    _port = "465"; // default smtp port
+    _sport = "465"; // default socketfactory port
  
     _user = "triageplusapp@gmail.com"; //TODO set username
     _pass = "cse360project"; //TODO set password
     _from = "TriagePlus"; //TODO set email sent from
-    _subject = ""/*Feedback.getaword()*/; //TODO set email subject
-    _body = ""/*Feedback.getCombined()*/; //TODO set email body
+    _subject = "YourPrescription"; //TODO set email subject
+    _body = "Bodygoeshere"; //TODO set email body
  
     _debuggable = false; // debug mode on or off - default off 
     _auth = true; // smtp authentication - default on 
@@ -74,7 +76,12 @@ public class Mail extends javax.mail.Authenticator {
   } 
  
   public boolean send() throws Exception { 
-    Properties props = _setProperties(); 
+    Properties props = _setProperties();
+      if (android.os.Build.VERSION.SDK_INT > 9)
+      {
+          StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+          StrictMode.setThreadPolicy(policy);
+      }
     if(!_user.equals("") && !_pass.equals("") && _to.length > 0 && !_from.equals("") && !_subject.equals("") && !_body.equals("")) { 
       Session session = Session.getInstance(props, this); 
  
