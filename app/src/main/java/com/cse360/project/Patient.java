@@ -15,7 +15,7 @@ public class Patient implements Serializable {
     private String last_name;
     private String password;
     private String doctor;
-    private ArrayList<Integer> symptom0, symptom1, symptom2;
+    private ArrayList<Integer> symptom0, symptom1, symptom2, symptom3, symptom4;
 
     public Patient() {
         first_name = "";
@@ -24,6 +24,8 @@ public class Patient implements Serializable {
         symptom0 = new ArrayList<Integer>();
         symptom1 = new ArrayList<Integer>();
         symptom2 = new ArrayList<Integer>();
+        symptom3 = new ArrayList<Integer>();
+        symptom4 = new ArrayList<Integer>();
     }
 
     public Patient(String fn, String ln, String pw, String pt) {
@@ -34,21 +36,23 @@ public class Patient implements Serializable {
         symptom0 = new ArrayList<Integer>();
         symptom1 = new ArrayList<Integer>();
         symptom2 = new ArrayList<Integer>();
+        symptom3 = new ArrayList<Integer>();
+        symptom4 = new ArrayList<Integer>();
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return first_name;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return last_name;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public String getDoctor(){
+    public String getDoctor() {
         return doctor;
     }
 
@@ -64,28 +68,48 @@ public class Patient implements Serializable {
         password = pw;
     }
 
-    public void setDoctor(String pt){
+    public void setDoctor(String pt) {
         doctor = pt;
     }
 
-    public ArrayList<Integer> getSymptom0(){
+    public ArrayList<Integer> getSymptom0() {
         return symptom0;
     }
-    public ArrayList<Integer> getSymptom1(){
+
+    public ArrayList<Integer> getSymptom1() {
         return symptom1;
     }
-    public ArrayList<Integer> getSymptom2(){
+
+    public ArrayList<Integer> getSymptom2() {
         return symptom2;
     }
 
-    public void setSymptom0(List<Integer> sym){
-        symptom0=(ArrayList<Integer>) sym;
+    public ArrayList<Integer> getSymptom3() {
+        return symptom3;
     }
-    public void setSymptom1(List<Integer> sym){
-        symptom1=(ArrayList<Integer>)sym;
+
+    public ArrayList<Integer> getSymptom4() {
+        return symptom4;
     }
-    public void setSymptom2(List<Integer> sym){
-        symptom2=(ArrayList<Integer>)sym;
+
+    public void setSymptom0(List<Integer> sym) {
+        symptom0 = (ArrayList<Integer>) sym;
+    }
+
+    public void setSymptom1(List<Integer> sym) {
+        symptom1 = (ArrayList<Integer>) sym;
+    }
+
+    public void setSymptom2(List<Integer> sym) {
+        symptom2 = (ArrayList<Integer>) sym;
+    }
+
+    public void setSymptom3(List<Integer> sym) {
+        symptom3 = (ArrayList<Integer>) sym;
+    }
+
+    public void setSymptom4(List<Integer> sym) {
+        symptom4 = (ArrayList<Integer>) sym;
     }
 
     public void createOnServer() {
@@ -93,25 +117,25 @@ public class Patient implements Serializable {
         pt.put("first_name", first_name);
         pt.put("last_name", last_name);
         pt.put("password", password);
-        pt.put("username", first_name+last_name);
+        pt.put("username", first_name + last_name);
         String tempdr = getDoctor();
         tempdr = tempdr.substring(4);
-        tempdr = tempdr.replaceAll("\\s+","");
+        tempdr = tempdr.replaceAll("\\s+", "");
         pt.put("doctor", tempdr);
         pt.saveEventually();
     }
 
-    public void updateOnServer(){
+    public void updateOnServer() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
-        query.whereEqualTo("username", first_name+last_name);
+        query.whereEqualTo("username", first_name + last_name);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                 if (e == null) {
-                    if(parseObjects.size()>0){
+                    if (parseObjects.size() > 0) {
                         ParseObject pt = parseObjects.get(0);
-                        pt.add("symptom0", getSymptom0().get(getSymptom0().size()-1));
-                        pt.add("symptom1", getSymptom1().get(getSymptom1().size()-1));
-                        pt.add("symptom2", getSymptom2().get(getSymptom2().size()-1));
+                        pt.add("symptom0", getSymptom0().get(getSymptom0().size() - 1));
+                        pt.add("symptom1", getSymptom1().get(getSymptom1().size() - 1));
+                        pt.add("symptom2", getSymptom2().get(getSymptom2().size() - 1));
                         pt.saveInBackground();
                     }
                 }
@@ -119,9 +143,9 @@ public class Patient implements Serializable {
         });
     }
 
-    public void addValues(int[] pains){
-        for(int i=0; i<pains.length;i++){
-            switch(i){
+    public void addValues(int[] pains) {
+        for (int i = 0; i < pains.length; i++) {
+            switch (i) {
                 case 0:
                     symptom0.add(pains[i]);
                     break;
