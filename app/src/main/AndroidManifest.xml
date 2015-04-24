@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Start"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,7 +50,7 @@
         </activity>
         <activity
             android:name=".PrescriptionForm"
-            android:label="@string/app_name" >
+            android:label="Prescription Form" >
         </activity>
     </application>
 
