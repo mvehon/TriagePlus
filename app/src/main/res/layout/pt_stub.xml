@@ -37,7 +37,7 @@
             android:id="@+id/ps1_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptom 1: "
+            android:text="Pain: "
             android:textSize="18dp" />
 
         <TextView
