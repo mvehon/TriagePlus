@@ -77,7 +77,7 @@ public class Start extends Activity {
                     @Override
                     public void run() {
                         try {
-                            InternalStorage.writeObject(getBaseContext(), "curUser", pat);
+                            InternalStorage.writeObject(getBaseContext(), pat.getFirstName()+pat.getLastName(), pat);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
@@ -228,10 +228,10 @@ public class Start extends Activity {
                     if (parseObjects.size() > 0) {
                         ParseObject temppt = parseObjects.get(0);
                         Patient pt = new Patient();
-                        pt.setFirstName(temppt.get("first_name").toString());
-                        pt.setLastName(temppt.get("last_name").toString());
-                        pt.setPassword(temppt.get("password").toString());
-                        pt.setDoctor(temppt.get("doctor").toString());
+                        pat.setFirstName(temppt.get("first_name").toString());
+                        pat.setLastName(temppt.get("last_name").toString());
+                        pat.setPassword(temppt.get("password").toString());
+                        pat.setDoctor(temppt.get("doctor").toString());
                         //TODO get pain values and put them into array
                         //TODO get prescriptions belonging to this patient
                         //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));

@@ -36,15 +36,16 @@ public class Patient_Main extends Activity{
                 Context.MODE_PRIVATE);
 
         curUser = new Patient();
+        String username = prefs.getString("curUser", "");
+
         try {
-            curUser = (Patient) InternalStorage.readObject(this, "curUser");
+            curUser = (Patient) InternalStorage.readObject(this, username);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        Toast.makeText(this, curUser.getFirstName(), Toast.LENGTH_LONG).show();
         //Send user to assessment page on click of the button
         submitButton = (Button) findViewById(R.id.pmainbutton);
         submitButton.setOnClickListener(new View.OnClickListener() {
