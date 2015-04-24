@@ -136,13 +136,25 @@ public class Start extends Activity {
                                 if (type.equals("Patient")) {
                                     loadPatientUser();
                                     prefs.edit().putInt("user_type", 1).apply();
-                                    startActivity(new Intent(Start.this, Patient_Main.class));
-                                    Start.this.finish();
+                                    login.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startActivity(new Intent(Start.this, Patient_Main.class));
+                                            Start.this.finish();
+                                        }
+                                    }, 1000);
+
                                 } else if (type.equals("Doctor")) {
                                     loadDoctorUser(); //This may not entirely work yet
                                     prefs.edit().putInt("user_type", 2).apply();
-                                    startActivity(new Intent(Start.this, Doctor_Main.class));
-                                    //Start.this.finish();
+                                    login.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startActivity(new Intent(Start.this, Doctor_Main.class));
+                                            Start.this.finish();
+                                        }
+                                    },1000);
+
                                 }
                             }
                         }

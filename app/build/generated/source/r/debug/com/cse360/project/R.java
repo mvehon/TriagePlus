@@ -958,7 +958,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f090001;
         public static final int action_menu_presenter=0x7f090002;
         public static final int action_mode_close_button=0x7f090024;
-        public static final int action_settings=0x7f090084;
+        public static final int action_settings=0x7f090085;
         public static final int activity_chooser_view_content=0x7f090025;
         public static final int allergiesCheck=0x7f09006e;
         public static final int always=0x7f090013;
@@ -966,7 +966,7 @@ containing a value of this type.
         public static final int button_login=0x7f09005f;
         public static final int checkBoxRemember=0x7f090060;
         public static final int checkbox=0x7f09002d;
-        public static final int clear_data=0x7f090085;
+        public static final int clear_data=0x7f090086;
         public static final int collapseActionView=0x7f090014;
         public static final int create=0x7f090061;
         public static final int dateText=0x7f090072;
@@ -993,7 +993,8 @@ containing a value of this type.
         public static final int linearSubmit=0x7f09006a;
         public static final int listMode=0x7f090006;
         public static final int list_item=0x7f090029;
-        public static final int logout=0x7f090086;
+        public static final int login=0x7f090084;
+        public static final int logout=0x7f090087;
         public static final int middle=0x7f090011;
         public static final int never=0x7f090016;
         public static final int none=0x7f090012;
@@ -1125,9 +1126,10 @@ containing a value of this type.
         public static final int thanks=0x7f030023;
     }
     public static final class menu {
-        public static final int doctor_menu=0x7f0d0000;
-        public static final int patient_menu=0x7f0d0001;
-        public static final int start=0x7f0d0002;
+        public static final int addusermenu=0x7f0d0000;
+        public static final int doctor_menu=0x7f0d0001;
+        public static final int patient_menu=0x7f0d0002;
+        public static final int start=0x7f0d0003;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0b0000;
