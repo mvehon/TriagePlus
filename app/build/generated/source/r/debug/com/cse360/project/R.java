@@ -698,7 +698,7 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f060005;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f070007;
+        public static final int abc_search_url_text_holo=0x7f070008;
         public static final int abc_search_url_text_normal=0x7f070000;
         public static final int abc_search_url_text_pressed=0x7f070001;
         public static final int abc_search_url_text_selected=0x7f070002;
@@ -706,6 +706,7 @@ containing a value of this type.
         public static final int blue=0x7f070004;
         public static final int green=0x7f070005;
         public static final int red=0x7f070006;
+        public static final int white=0x7f070007;
     }
     public static final class dimen {
         public static final int abc_action_bar_default_height=0x7f080000;
@@ -957,7 +958,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f090001;
         public static final int action_menu_presenter=0x7f090002;
         public static final int action_mode_close_button=0x7f090024;
-        public static final int action_settings=0x7f090076;
+        public static final int action_settings=0x7f090077;
         public static final int activity_chooser_view_content=0x7f090025;
         public static final int allergiesCheck=0x7f090065;
         public static final int always=0x7f090013;
@@ -965,7 +966,7 @@ containing a value of this type.
         public static final int button_login=0x7f090057;
         public static final int checkBoxRemember=0x7f09005c;
         public static final int checkbox=0x7f09002d;
-        public static final int clear_data=0x7f090077;
+        public static final int clear_data=0x7f090078;
         public static final int collapseActionView=0x7f090014;
         public static final int dateText=0x7f090069;
         public static final int default_activity_button=0x7f090028;
@@ -991,7 +992,7 @@ containing a value of this type.
         public static final int linearSubmit=0x7f090061;
         public static final int listMode=0x7f090006;
         public static final int list_item=0x7f090029;
-        public static final int logout=0x7f090078;
+        public static final int logout=0x7f090079;
         public static final int middle=0x7f090011;
         public static final int never=0x7f090016;
         public static final int none=0x7f090012;
@@ -1058,12 +1059,13 @@ containing a value of this type.
         public static final int textLastName=0x7f090059;
         public static final int textView=0x7f090047;
         public static final int textView1=0x7f090044;
-        public static final int textView2=0x7f090075;
+        public static final int textView2=0x7f090076;
         public static final int textView3=0x7f090063;
         public static final int textView5=0x7f09005b;
         public static final int textView6=0x7f09005e;
         public static final int title=0x7f09002b;
         public static final int top_action_bar=0x7f090020;
+        public static final int txt=0x7f090075;
         public static final int up=0x7f090021;
         public static final int useLogo=0x7f09000e;
         public static final int withText=0x7f090017;

@@ -1,5 +1,6 @@
 package com.cse360.project;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -55,7 +57,8 @@ public class Start extends Activity {
             Start.this.finish();
         } else if (prefs.getBoolean("loggedin", false)) {
             setContentView(R.layout.splash);
-            LinearLayout splashbg = (LinearLayout)findViewById(R.id.splashbg);
+            getActionBar().hide();
+            RelativeLayout splashbg = (RelativeLayout)findViewById(R.id.splashbg);
             if (prefs.getInt("user_type", 0) == 2) {
                 loadDoctorUser();
                 splashbg.postDelayed(new Runnable() {
