@@ -268,16 +268,23 @@ public class Doctor_Main extends FragmentActivity implements
                     TextView ps1 = (TextView) pt_ll_inner.findViewById(R.id.ps1);
                     TextView ps2 = (TextView) pt_ll_inner.findViewById(R.id.ps2);
                     TextView ps3 = (TextView) pt_ll_inner.findViewById(R.id.ps3);
+                    TextView ps4 = (TextView) pt_ll_inner.findViewById(R.id.ps4);
+                    TextView ps5 = (TextView) pt_ll_inner.findViewById(R.id.ps5);
 
                     pname.setText(pts.get(i).getFirstName() + " " + pts.get(i).getLastName());
                     try{ pts.get(i).getSymptom0();
                         ps1.setText(Integer.toString(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1)));
                         ps2.setText(Integer.toString(pts.get(i).getSymptom1().get(pts.get(i).getSymptom1().size() - 1)));
                         ps3.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom2().size() - 1)));
+                        ps4.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom3().size() - 1)));
+                        ps5.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom4().size() - 1)));
                     }catch (NullPointerException e){
                         ps1.setText("N/A");
                         ps2.setText("N/A");
-                        ps3.setText("N/A");}
+                        ps3.setText("N/A");
+                        ps4.setText("N/A");
+                        ps5.setText("N/A");
+                    }
 
 
                     pt_ll_inner.setId(pt_ll.getChildCount());
