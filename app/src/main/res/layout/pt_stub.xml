@@ -37,7 +37,7 @@
             android:id="@+id/ps1_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptom 1: "
+            android:text="Pain: "
             android:textSize="18dp" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:id="@+id/ps2_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptom 2: "
+            android:text="Nausea: "
             android:textSize="18dp" />
 
         <TextView
@@ -79,7 +79,7 @@
             android:id="@+id/ps3_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptom 3: "
+            android:text="Drowsiness: "
             android:textSize="18dp" />
 
         <TextView
@@ -100,7 +100,7 @@
             android:id="@+id/ps4_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptom 4: "
+            android:text="Anxiety: "
             android:textSize="18dp" />
 
         <TextView
@@ -121,7 +121,7 @@
             android:id="@+id/ps5_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptom 5: "
+            android:text="Depression: "
             android:textSize="18dp" />
 
         <TextView
