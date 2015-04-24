@@ -80,11 +80,11 @@ public class Patient implements Serializable {
     public void setSymptom0(List<Integer> sym){
         symptom0=(ArrayList<Integer>) sym;
     }
-    public void setSymptom1(ArrayList<Integer> sym){
-        symptom1=sym;
+    public void setSymptom1(List<Integer> sym){
+        symptom1=(ArrayList<Integer>)sym;
     }
-    public void setSymptom2(ArrayList<Integer> sym){
-        symptom2=sym;
+    public void setSymptom2(List<Integer> sym){
+        symptom2=(ArrayList<Integer>)sym;
     }
 
     public void createOnServer() {

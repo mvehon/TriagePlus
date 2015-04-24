@@ -1,5 +1,6 @@
 package com.cse360.project;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -33,6 +35,9 @@ public class Start extends Activity {
     CheckBox remember;
     boolean found;
     String type = "";
+    Doctor dr = new Doctor();
+    Patient pat = new Patient();
+    Patient drpat = new Patient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,21 +58,33 @@ public class Start extends Activity {
             Start.this.finish();
         } else if (prefs.getBoolean("loggedin", false)) {
             setContentView(R.layout.splash);
-            LinearLayout splashbg = (LinearLayout)findViewById(R.id.splashbg);
+            getActionBar().hide();
+            RelativeLayout splashbg = (RelativeLayout)findViewById(R.id.splashbg);
             if (prefs.getInt("user_type", 0) == 2) {
                 loadDoctorUser();
                 splashbg.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        try {
+                            InternalStorage.writeObject(getBaseContext(), dr.getFirstName()+dr.getLastName(), dr);
+                        } catch (IOException e1) {
+                            Log.e("Writing", "Failed to write it to memory");
+                            e1.printStackTrace();
+                        }
                         startActivity(new Intent(Start.this, Doctor_Main.class));
                         Start.this.finish();
                     }
-                }, 2000);
+                }, 3000);
             } else if (prefs.getInt("user_type", 0) == 1) {
                 loadPatientUser();
                 splashbg.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        try {
+                            InternalStorage.writeObject(getBaseContext(), pat.getFirstName()+pat.getLastName(), pat);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                         startActivity(new Intent(Start.this, Patient_Main.class));
                         Start.this.finish();
                     }
@@ -85,6 +102,7 @@ public class Start extends Activity {
             password = (EditText) findViewById(R.id.password);
             remember = (CheckBox) findViewById(R.id.checkBoxRemember);
             final Button login = (Button) findViewById(R.id.button_login);
+            Button create = (Button) findViewById(R.id.create);
 
             remember.setChecked(prefs.getBoolean("remember", false));
             if (remember.isChecked()) {
@@ -92,6 +110,14 @@ public class Start extends Activity {
                 lastname.setText(prefs.getString("user_ln", ""));
                 password.setText(prefs.getString("user_pw", ""));
             }
+
+            create.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Start.this, AddUser.class));
+                    Start.this.finish();
+                }
+            });
 
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,18 +128,21 @@ public class Start extends Activity {
                         @Override
                         public void run() {
                             if (found) {
-                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
-                                prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
-                                prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
-                                prefs.edit().putString("user_pw", password.getText().toString()).commit();
+                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).apply();
+                                prefs.edit().putString("user_fn", firstname.getText().toString()).apply();
+                                prefs.edit().putString("user_ln", lastname.getText().toString()).apply();
+                                prefs.edit().putString("user_pw", password.getText().toString()).apply();
+                                prefs.edit().putBoolean("loggedin", true).apply();
                                 if (type.equals("Patient")) {
-                                    prefs.edit().putInt("user_type", 1).commit();
+                                    loadPatientUser();
+                                    prefs.edit().putInt("user_type", 1).apply();
                                     startActivity(new Intent(Start.this, Patient_Main.class));
                                     Start.this.finish();
                                 } else if (type.equals("Doctor")) {
-                                    prefs.edit().putInt("user_type", 2).commit();
+                                    loadDoctorUser(); //This may not entirely work yet
+                                    prefs.edit().putInt("user_type", 2).apply();
                                     startActivity(new Intent(Start.this, Doctor_Main.class));
-                                    Start.this.finish();
+                                    //Start.this.finish();
                                 }
                             }
                         }
@@ -196,7 +225,6 @@ public class Start extends Activity {
                     }
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
-                    //Toast.makeText(getApplicationContext(), "No user found with that name", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -211,20 +239,15 @@ public class Start extends Activity {
                     Log.d("score", "Retrieved " + parseObjects.size() + " people");
                     if (parseObjects.size() > 0) {
                         ParseObject temppt = parseObjects.get(0);
-                        Patient pt = new Patient();
-                        pt.setFirstName(temppt.get("first_name").toString());
-                        pt.setLastName(temppt.get("last_name").toString());
-                        pt.setPassword(temppt.get("password").toString());
-                        pt.setDoctor(temppt.get("doctor").toString());
+                        pat.setFirstName(temppt.get("first_name").toString());
+                        pat.setLastName(temppt.get("last_name").toString());
+                        pat.setPassword(temppt.get("password").toString());
+                        pat.setDoctor(temppt.get("doctor").toString());
                         //TODO get pain values and put them into array
                         //TODO get prescriptions belonging to this patient
-                        //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
-                        //pt.setSymptom0(temppt.getList("symptom0"));
-                        try {
-                            InternalStorage.writeObject(getBaseContext(), "curUser", pt);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                        List<Integer> temp = new ArrayList<Integer>();
+                        temp = temppt.getList("symptom0");
+                        pat.setSymptom0(temp);
                     }
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
@@ -235,7 +258,6 @@ public class Start extends Activity {
 
     public void loadDoctorUser(){
         {
-            final Doctor dr = new Doctor();
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
             query.whereEqualTo("username", prefs.getString("curUser",""));
             query.findInBackground(new FindCallback<ParseObject>() {
@@ -251,24 +273,34 @@ public class Start extends Activity {
                             //pt.setSymptom0(temppt.getList("symptom0"));
 
                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
-                            query.whereEqualTo("username", prefs.getString("curUser",""));
+                            query.whereEqualTo("doctor", prefs.getString("curUser",""));
                             query.findInBackground(new FindCallback<ParseObject>() {
                                 public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                                     if (e == null) {
                                         Log.d("score", "Retrieved " + parseObjects.size() + " people");
                                         if (parseObjects.size() > 0) {
                                             for(int i=0; i<parseObjects.size();i++){
-                                                ParseObject temppt = parseObjects.get(0);
-                                                Patient pt = new Patient();
-                                                pt.setFirstName(temppt.get("first_name").toString());
-                                                pt.setLastName(temppt.get("last_name").toString());
-                                                pt.setPassword(temppt.get("password").toString());
-                                                pt.setDoctor(temppt.get("doctor").toString());
+                                                //Toast.makeText(getBaseContext(), "adding patient"+ Integer.toString(i), Toast.LENGTH_SHORT).show();
+                                                ParseObject temppt = parseObjects.get(i);
+                                                drpat = new Patient();
+                                                drpat.setFirstName(temppt.get("first_name").toString());
+                                                drpat.setLastName(temppt.get("last_name").toString());
+                                                drpat.setPassword(temppt.get("password").toString());
+                                                drpat.setDoctor(temppt.get("doctor").toString());
                                                 //TODO get pain values and put them into array
                                                 //TODO get prescriptions belonging to this patient
-                                                //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
-                                                //pt.setSymptom0(temppt.getList("symptom0"));
-                                                dr.addPatient(pt);}
+                                                List<Integer> temp = new ArrayList<Integer>();
+                                                List<Integer> temp1 = new ArrayList<Integer>();
+                                                List<Integer> temp2 = new ArrayList<Integer>();
+                                                temp = temppt.getList("symptom0");
+                                                drpat.setSymptom0(temp);
+                                                temp1 = temppt.getList("symptom1");
+                                                drpat.setSymptom1(temp1);
+                                                temp2 = temppt.getList("symptom2");
+                                                drpat.setSymptom2(temp2);
+                                                Patient temppat = drpat;
+                                                dr.addPatient(temppat);
+                                            }
                                         }
                                     } else {
                                         Log.d("score", "Error: " + e.getMessage());
@@ -277,11 +309,7 @@ public class Start extends Activity {
                             });
 
 
-                            try {
-                                InternalStorage.writeObject(getBaseContext(), "curUser", dr);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
+
                         }
                     } else {
                         Log.d("score", "Error: " + e.getMessage());

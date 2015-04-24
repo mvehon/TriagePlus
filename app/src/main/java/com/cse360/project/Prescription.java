@@ -6,11 +6,11 @@ package com.cse360.project;
 public class Prescription {
 
     //this is the prescription class that helps the prescirptionForm activity
-    String rx_name;
-    boolean allergies;
-    boolean refil;
-    String fill_date;
-    int duration;
+    private String rx_name;
+    private boolean allergies;
+    private boolean refil;
+    private String fill_date;
+    private int duration;
 
     public Prescription() {
 
@@ -19,6 +19,14 @@ public class Prescription {
         refil = false;
         fill_date = "";
     }
+
+
+    public Prescription(String rx_name, String fill_date, int duration) {
+        this.rx_name = rx_name;
+        this.fill_date = fill_date;
+        this.duration = duration;
+    }
+
     //@Override
     public String toEmail(String patientName, String doctorName){
         String email;

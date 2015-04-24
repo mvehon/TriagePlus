@@ -2,15 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/pmain">
+    android:id="@+id/pmain"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Prescription History \n\n\n\n (to be completed...)\n\n\n\n"
+        android:text="Prescription History \n\n\n"
         android:id="@+id/textView6"
         android:layout_gravity="center_horizontal" />
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="109dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:layout_weight="0.60"></TableLayout>
 
     <Button
         android:layout_width="311dp"
@@ -18,4 +28,5 @@
         android:text="@string/patient_main_text"
         android:id="@+id/pmainbutton"
         android:layout_gravity="center_horizontal" />
+
 </LinearLayout>
