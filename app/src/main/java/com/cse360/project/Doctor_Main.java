@@ -271,9 +271,13 @@ public class Doctor_Main extends FragmentActivity implements
 
                     pname.setText(pts.get(i).getFirstName() + " " + pts.get(i).getLastName());
                     if (pts.get(i).getSymptom0().size() > 0) {
-                        ps1.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1));
-                        ps2.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom1().size() - 1));
-                        ps3.setText(pts.get(i).getSymptom0().get(pts.get(i).getSymptom2().size() - 1));
+                        ps1.setText(Integer.toString(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1)));
+                        ps2.setText(Integer.toString(pts.get(i).getSymptom1().get(pts.get(i).getSymptom1().size() - 1)));
+                        ps3.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom2().size() - 1)));
+                    }else{
+                        ps1.setText("N/A");
+                        ps2.setText("N/A");
+                        ps3.setText("N/A");
                     }
 
                     pt_ll_inner.setId(pt_ll.getChildCount());

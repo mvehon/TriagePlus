@@ -102,6 +102,7 @@ public class Start extends Activity {
             password = (EditText) findViewById(R.id.password);
             remember = (CheckBox) findViewById(R.id.checkBoxRemember);
             final Button login = (Button) findViewById(R.id.button_login);
+            Button create = (Button) findViewById(R.id.create);
 
             remember.setChecked(prefs.getBoolean("remember", false));
             if (remember.isChecked()) {
@@ -109,6 +110,14 @@ public class Start extends Activity {
                 lastname.setText(prefs.getString("user_ln", ""));
                 password.setText(prefs.getString("user_pw", ""));
             }
+
+            create.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Start.this, AddUser.class));
+                    Start.this.finish();
+                }
+            });
 
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -278,11 +287,18 @@ public class Start extends Activity {
                                                 drpat.setLastName(temppt.get("last_name").toString());
                                                 drpat.setPassword(temppt.get("password").toString());
                                                 drpat.setDoctor(temppt.get("doctor").toString());
-                                                Patient temppat = drpat;
                                                 //TODO get pain values and put them into array
                                                 //TODO get prescriptions belonging to this patient
-                                                //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
-                                                //pt.setSymptom0(temppt.getList("symptom0"));
+                                                List<Integer> temp = new ArrayList<Integer>();
+                                                List<Integer> temp1 = new ArrayList<Integer>();
+                                                List<Integer> temp2 = new ArrayList<Integer>();
+                                                temp = temppt.getList("symptom0");
+                                                drpat.setSymptom0(temp);
+                                                temp1 = temppt.getList("symptom1");
+                                                drpat.setSymptom1(temp1);
+                                                temp2 = temppt.getList("symptom2");
+                                                drpat.setSymptom2(temp2);
+                                                Patient temppat = drpat;
                                                 dr.addPatient(temppat);
                                             }
                                         }
