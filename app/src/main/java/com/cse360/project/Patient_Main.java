@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Patient_Main extends Activity{
 
@@ -26,7 +27,7 @@ public class Patient_Main extends Activity{
     private String[] tableWords = {"Prescription Name", "Fill Date", "Duration"};
     private TableLayout table;
     private ArrayList<Prescription> prescriptionList; //List of prescriptions for this patient
-    private static final int NUM_COLUMNS = 3; //Number of columns in the prescription table
+    private final int NUM_COLUMNS = 3; //Number of columns in the prescription table
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,9 @@ public class Patient_Main extends Activity{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        List<Integer> symp0vals = new ArrayList<Integer>();
+        symp0vals = curUser.getSymptom0();
 
         //Send user to assessment page on click of the button
         submitButton = (Button) findViewById(R.id.pmainbutton);

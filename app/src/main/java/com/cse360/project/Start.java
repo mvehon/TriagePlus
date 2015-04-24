@@ -37,6 +37,7 @@ public class Start extends Activity {
     String type = "";
     Doctor dr = new Doctor();
     Patient pat = new Patient();
+    Patient drpat = new Patient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +216,6 @@ public class Start extends Activity {
                     }
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
-                    //Toast.makeText(getApplicationContext(), "No user found with that name", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -230,16 +230,15 @@ public class Start extends Activity {
                     Log.d("score", "Retrieved " + parseObjects.size() + " people");
                     if (parseObjects.size() > 0) {
                         ParseObject temppt = parseObjects.get(0);
-                        Patient pt = new Patient();
                         pat.setFirstName(temppt.get("first_name").toString());
                         pat.setLastName(temppt.get("last_name").toString());
                         pat.setPassword(temppt.get("password").toString());
                         pat.setDoctor(temppt.get("doctor").toString());
                         //TODO get pain values and put them into array
                         //TODO get prescriptions belonging to this patient
-                        //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
-                        //pt.setSymptom0(temppt.getList("symptom0"));
-
+                        List<Integer> temp = new ArrayList<Integer>();
+                        temp = temppt.getList("symptom0");
+                        pat.setSymptom0(temp);
                     }
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
@@ -274,12 +273,12 @@ public class Start extends Activity {
                                             for(int i=0; i<parseObjects.size();i++){
                                                 //Toast.makeText(getBaseContext(), "adding patient"+ Integer.toString(i), Toast.LENGTH_SHORT).show();
                                                 ParseObject temppt = parseObjects.get(i);
-                                                pat = new Patient();
-                                                pat.setFirstName(temppt.get("first_name").toString());
-                                                pat.setLastName(temppt.get("last_name").toString());
-                                                pat.setPassword(temppt.get("password").toString());
-                                                pat.setDoctor(temppt.get("doctor").toString());
-                                                Patient temppat = pat;
+                                                drpat = new Patient();
+                                                drpat.setFirstName(temppt.get("first_name").toString());
+                                                drpat.setLastName(temppt.get("last_name").toString());
+                                                drpat.setPassword(temppt.get("password").toString());
+                                                drpat.setDoctor(temppt.get("doctor").toString());
+                                                Patient temppat = drpat;
                                                 //TODO get pain values and put them into array
                                                 //TODO get prescriptions belonging to this patient
                                                 //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
