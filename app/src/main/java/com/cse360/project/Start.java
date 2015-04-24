@@ -33,6 +33,8 @@ public class Start extends Activity {
     CheckBox remember;
     boolean found;
     String type = "";
+    Doctor dr = new Doctor();
+    Patient pat = new Patient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +61,27 @@ public class Start extends Activity {
                 splashbg.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        Toast.makeText(getBaseContext(), "before writ: "+Integer.toString(dr.getPts().size()), Toast.LENGTH_LONG).show();
+                        try {
+                            InternalStorage.writeObject(getBaseContext(), dr.getFirstName()+dr.getLastName(), dr);
+                        } catch (IOException e1) {
+                            Log.e("Writing", "Failed to write it to memory");
+                            e1.printStackTrace();
+                        }
                         startActivity(new Intent(Start.this, Doctor_Main.class));
                         Start.this.finish();
                     }
-                }, 2000);
+                }, 3000);
             } else if (prefs.getInt("user_type", 0) == 1) {
                 loadPatientUser();
                 splashbg.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        try {
+                            InternalStorage.writeObject(getBaseContext(), "curUser", pat);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                         startActivity(new Intent(Start.this, Patient_Main.class));
                         Start.this.finish();
                     }
@@ -106,6 +120,7 @@ public class Start extends Activity {
                                 prefs.edit().putString("user_fn", firstname.getText().toString()).apply();
                                 prefs.edit().putString("user_ln", lastname.getText().toString()).apply();
                                 prefs.edit().putString("user_pw", password.getText().toString()).apply();
+                                prefs.edit().putBoolean("loggedin", true).apply();
                                 if (type.equals("Patient")) {
                                     loadPatientUser();
                                     prefs.edit().putInt("user_type", 1).apply();
@@ -223,11 +238,7 @@ public class Start extends Activity {
                         //TODO get prescriptions belonging to this patient
                         //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
                         //pt.setSymptom0(temppt.getList("symptom0"));
-                        try {
-                            InternalStorage.writeObject(getBaseContext(), "curUser", pt);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+
                     }
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
@@ -238,7 +249,6 @@ public class Start extends Activity {
 
     public void loadDoctorUser(){
         {
-            final Doctor dr = new Doctor();
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
             query.whereEqualTo("username", prefs.getString("curUser",""));
             query.findInBackground(new FindCallback<ParseObject>() {
@@ -252,39 +262,38 @@ public class Start extends Activity {
                             dr.setPassword(tempdr.get("password").toString());
                             //dr.setSymptom0((List<Integer>) temppt.getList("symptom0"));
                             //pt.setSymptom0(temppt.getList("symptom0"));
-/*
+
                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
-                            query.whereEqualTo("username", prefs.getString("curUser",""));
+                            query.whereEqualTo("doctor", prefs.getString("curUser",""));
                             query.findInBackground(new FindCallback<ParseObject>() {
                                 public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                                     if (e == null) {
                                         Log.d("score", "Retrieved " + parseObjects.size() + " people");
                                         if (parseObjects.size() > 0) {
                                             for(int i=0; i<parseObjects.size();i++){
-                                                ParseObject temppt = parseObjects.get(0);
-                                                Patient pt = new Patient();
-                                                pt.setFirstName(temppt.get("first_name").toString());
-                                                pt.setLastName(temppt.get("last_name").toString());
-                                                pt.setPassword(temppt.get("password").toString());
-                                                pt.setDoctor(temppt.get("doctor").toString());
+                                                //Toast.makeText(getBaseContext(), "adding patient"+ Integer.toString(i), Toast.LENGTH_SHORT).show();
+                                                ParseObject temppt = parseObjects.get(i);
+                                                pat = new Patient();
+                                                pat.setFirstName(temppt.get("first_name").toString());
+                                                pat.setLastName(temppt.get("last_name").toString());
+                                                pat.setPassword(temppt.get("password").toString());
+                                                pat.setDoctor(temppt.get("doctor").toString());
+                                                Patient temppat = pat;
                                                 //TODO get pain values and put them into array
                                                 //TODO get prescriptions belonging to this patient
                                                 //pt.setSymptom0((List<Integer>) temppt.getList("symptom0"));
                                                 //pt.setSymptom0(temppt.getList("symptom0"));
-                                                dr.addPatient(pt);}
+                                                dr.addPatient(temppat);
+                                            }
                                         }
                                     } else {
                                         Log.d("score", "Error: " + e.getMessage());
                                     }
                                 }
                             });
-*/
 
-                            try {
-                                InternalStorage.writeObject(getBaseContext(), "curUser", dr);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
+
+
                         }
                     } else {
                         Log.d("score", "Error: " + e.getMessage());

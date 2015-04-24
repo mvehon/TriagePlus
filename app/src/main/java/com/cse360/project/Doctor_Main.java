@@ -79,6 +79,7 @@ public class Doctor_Main extends FragmentActivity implements
         }
         pts = new ArrayList<Patient>();
         pts = curUser.getPts();
+        Toast.makeText(getBaseContext(), "pts size: " + Integer.toString(pts.size()), Toast.LENGTH_LONG).show();
 /*
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
         query.whereEqualTo("username", prefs.getString("curUser", ""));
