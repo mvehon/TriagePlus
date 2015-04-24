@@ -20,7 +20,7 @@
         android:layout_height="109dp"
         android:shrinkColumns="*"
         android:stretchColumns="*"
-        android:layout_weight="0.60"></TableLayout>
+        android:layout_weight="1.04"></TableLayout>
 
     <Button
         android:layout_width="311dp"
