@@ -61,7 +61,6 @@ public class Start extends Activity {
                 splashbg.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getBaseContext(), "before writ: "+Integer.toString(dr.getPts().size()), Toast.LENGTH_LONG).show();
                         try {
                             InternalStorage.writeObject(getBaseContext(), dr.getFirstName()+dr.getLastName(), dr);
                         } catch (IOException e1) {
@@ -129,7 +128,6 @@ public class Start extends Activity {
                                 } else if (type.equals("Doctor")) {
                                     loadDoctorUser(); //This may not entirely work yet
                                     prefs.edit().putInt("user_type", 2).apply();
-                                    Toast.makeText(getBaseContext(), prefs.getString("curUser",""), Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(Start.this, Doctor_Main.class));
                                     //Start.this.finish();
                                 }

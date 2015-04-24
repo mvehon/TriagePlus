@@ -73,6 +73,6 @@ public class Doctor implements Serializable {
 
     @Override
     public String toString() {
-        return "Dr. " + first_name + last_name;
+        return "Dr. " + first_name + " " + last_name;
     }
 }

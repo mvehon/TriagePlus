@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.List;
 
 /*EDIT NOTES:
     The prescription form will now check for text in the prescription text box and text in the date box
@@ -31,6 +33,8 @@ public class PrescriptionForm extends Activity {
     private String dateString, dateCorrect, duration;
     private int monthCheck, dayCheck, yearCheck;
     Doctor curUser;
+    Spinner patient_spinner;
+    List<Patient> pts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +45,15 @@ public class PrescriptionForm extends Activity {
         SharedPreferences.Editor editor = prefs.edit();
 
         curUser = new Doctor();
+
         try {
-            curUser = (Doctor) InternalStorage.readObject(getBaseContext(),"curUser");
+            curUser = (Doctor) InternalStorage.readObject(getBaseContext(), prefs.getString("user_fn","")+prefs.getString("user_ln",""));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        pts = curUser.getPts();
 
         submit = (LinearLayout) findViewById(R.id.linearSubmit);
         prescription = (EditText) findViewById(R.id.prescriptionText);
@@ -55,6 +61,10 @@ public class PrescriptionForm extends Activity {
         allergies = (CheckBox) findViewById(R.id.allergiesCheck);
         refil = (CheckBox) findViewById(R.id.refilCheck);
         durText = (EditText) findViewById(R.id.durText);
+        patient_spinner = (Spinner)findViewById(R.id.patient_spinner);
+
+        ArrayAdapter ptsAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, pts);
+        patient_spinner.setAdapter(ptsAdapter);
 
         //much new code here
         submit.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +116,7 @@ public class PrescriptionForm extends Activity {
                             Mail m = new Mail("triageplusapp@gmail.com", "cse360project");
                             String[] toArr = {"poyopoyo91@gmail.com"};
                             m.setTo(toArr);
-                            m.setBody(prescription1.toEmail("EbolaMan", curUser.toString()));
+                            m.setBody(prescription1.toEmail(patient_spinner.getSelectedItem().toString(), curUser.toString()));
 
                             try {
                                 if(m.send()) {

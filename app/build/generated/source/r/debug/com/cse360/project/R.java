@@ -958,7 +958,7 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f090024;
         public static final int action_settings=0x7f090075;
         public static final int activity_chooser_view_content=0x7f090025;
-        public static final int allergiesCheck=0x7f090065;
+        public static final int allergiesCheck=0x7f090064;
         public static final int always=0x7f090013;
         public static final int beginning=0x7f09000f;
         public static final int button_login=0x7f090057;
@@ -997,6 +997,7 @@ containing a value of this type.
         public static final int normal=0x7f090007;
         public static final int pager=0x7f090056;
         public static final int password=0x7f09005a;
+        public static final int patient_spinner=0x7f090066;
         public static final int pmain=0x7f09005d;
         public static final int pmainbutton=0x7f09005f;
         public static final int pname=0x7f09006c;
@@ -1028,7 +1029,7 @@ containing a value of this type.
         public static final int radio=0x7f09002f;
         public static final int rb_doctor=0x7f09003d;
         public static final int rb_patient=0x7f09003e;
-        public static final int refilCheck=0x7f090066;
+        public static final int refilCheck=0x7f090065;
         public static final int rg=0x7f09003c;
         public static final int scrollView=0x7f090049;
         public static final int search_badge=0x7f090032;
@@ -1057,7 +1058,6 @@ containing a value of this type.
         public static final int textView1=0x7f090044;
         public static final int textView2=0x7f090074;
         public static final int textView3=0x7f090062;
-        public static final int textView4=0x7f090064;
         public static final int textView5=0x7f09005b;
         public static final int textView6=0x7f09005e;
         public static final int title=0x7f09002b;
@@ -1129,10 +1129,11 @@ containing a value of this type.
         public static final int action_settings=0x7f0b000d;
         public static final int app_name=0x7f0b000e;
         public static final int patient_main_text=0x7f0b000f;
-        public static final int spin_doctor_prompt=0x7f0b0010;
-        public static final int title_section1=0x7f0b0011;
-        public static final int title_section2=0x7f0b0012;
-        public static final int title_section3=0x7f0b0013;
+        public static final int patient_spin_prompt=0x7f0b0010;
+        public static final int spin_doctor_prompt=0x7f0b0011;
+        public static final int title_section1=0x7f0b0012;
+        public static final int title_section2=0x7f0b0013;
+        public static final int title_section3=0x7f0b0014;
     }
     public static final class style {
         /** 
