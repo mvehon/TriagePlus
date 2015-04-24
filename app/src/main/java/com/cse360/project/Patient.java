@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Patient implements Serializable {
+    private static final long serialVersionUID = -6348718630459274463L;
     private String first_name;
     private String last_name;
     private String password;
