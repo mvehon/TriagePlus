@@ -20,13 +20,15 @@ import java.io.IOException;
 
 public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListener {
     private Context context;
-    private TextView pslide0_txt,pslide1_txt,pslide2_txt;
+    private TextView pslide0_txt,pslide1_txt,pslide2_txt, pslide3_txt, pslide4_txt;
     private SharedPreferences prefs;
     private Patient curUser;
     private String username;
     private ImageButton pslide0_leftbtn, pslide0_rightbtn;
     private ImageButton pslide1_leftbtn, pslide1_rightbtn;
     private ImageButton pslide2_leftbtn, pslide2_rightbtn;
+    private ImageButton pslide3_leftbtn, pslide3_rightbtn;
+    private ImageButton pslide4_leftbtn, pslide4_rightbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,27 +60,39 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         pslide1_txt= (TextView) findViewById(R.id.pslide1_txt);
         final SeekBar pslide2 = (SeekBar) findViewById(R.id.pslide2);
         pslide2_txt= (TextView) findViewById(R.id.pslide2_txt);
+        final SeekBar pslide3 = (SeekBar) findViewById(R.id.pslide3);
+        pslide3_txt= (TextView) findViewById(R.id.pslide3_txt);
+        final SeekBar pslide4 = (SeekBar) findViewById(R.id.pslide4);
+        pslide4_txt= (TextView) findViewById(R.id.pslide4_txt);
 
         //Could set to last reported values here
         pslide0.setProgress(0);
         pslide1.setProgress(0);
         pslide2.setProgress(0);
+        pslide3.setProgress(0);
+        pslide4.setProgress(0);
 
 
         //Set the text of the initial seekbar level
-        pslide0_txt.setText("Head Pain: " + Integer.toString(pslide0.getProgress()+1));
+        pslide0_txt.setText("Pain: " + Integer.toString(pslide0.getProgress()+1));
         pslide1_txt.setText("Nausea: " + Integer.toString(pslide1.getProgress()+1));
-        pslide2_txt.setText("Chest Pain: " + Integer.toString(pslide2.getProgress()+1));
+        pslide2_txt.setText("Drowsiness: " + Integer.toString(pslide2.getProgress()+1));
+        pslide3_txt.setText("Anxiety: " + Integer.toString(pslide3.getProgress()+1));
+        pslide4_txt.setText("Depression: " + Integer.toString(pslide4.getProgress()+1));
 
         //Set custom seekbar drawables
         pslide0.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_progress1));
         pslide1.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_progress1));
         pslide2.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_progress1));
+        pslide3.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_progress1));
+        pslide4.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_progress1));
 
         //Set seekbar listener
         pslide0.setOnSeekBarChangeListener(this);
         pslide1.setOnSeekBarChangeListener(this);
         pslide2.setOnSeekBarChangeListener(this);
+        pslide3.setOnSeekBarChangeListener(this);
+        pslide4.setOnSeekBarChangeListener(this);
 
         //Instantiate layout object ( test )
         LinearLayout submit = (LinearLayout) findViewById(R.id.submit);
@@ -87,7 +101,7 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int painArray[] = {pslide0.getProgress(),pslide1.getProgress(),pslide2.getProgress()};
+                int painArray[] = {pslide0.getProgress(),pslide1.getProgress(),pslide2.getProgress(), pslide3.getProgress(), pslide4.getProgress()};
                 curUser.addValues(painArray);
                 curUser.updateOnServer();
                 //Close activity and start Patient_Main
@@ -111,6 +125,10 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         pslide1_rightbtn = (ImageButton) findViewById(R.id.pslide1_rightbtn);
         pslide2_leftbtn = (ImageButton) findViewById(R.id.pslide2_leftbtn);
         pslide2_rightbtn = (ImageButton) findViewById(R.id.pslide2_rightbtn);
+        pslide3_leftbtn = (ImageButton) findViewById(R.id.pslide3_leftbtn);
+        pslide3_rightbtn = (ImageButton) findViewById(R.id.pslide3_rightbtn);
+        pslide4_leftbtn = (ImageButton) findViewById(R.id.pslide4_leftbtn);
+        pslide4_rightbtn = (ImageButton) findViewById(R.id.pslide4_rightbtn);
 
         pslide0_leftbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +166,33 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
                 pslide2.setProgress(pslide2.getProgress()+1);
             }
         });
+
+        //added for the new assesment form updates
+        pslide3_leftbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pslide3.setProgress(pslide3.getProgress()-1);
+            }
+        });
+        pslide3_rightbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pslide3.setProgress(pslide3.getProgress()+1);
+            }
+        });
+
+        pslide4_leftbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pslide4.setProgress(pslide4.getProgress()-1);
+            }
+        });
+        pslide4_rightbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pslide4.setProgress(pslide4.getProgress()+1);
+            }
+        });
     }
 
     @Override
@@ -156,13 +201,19 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         sliderStyle(seekBar, progress);
         switch(seekBar.getId()){
             case R.id.pslide0:
-                pslide0_txt.setText("Head Pain: " + Integer.toString(progress+1));
+                pslide0_txt.setText("Pain: " + Integer.toString(progress+1));
                 break;
             case R.id.pslide1:
                 pslide1_txt.setText("Nausea: " + Integer.toString(progress+1));
                 break;
             case R.id.pslide2:
-                pslide2_txt.setText("Chest Pain: " + Integer.toString(progress+1));
+                pslide2_txt.setText("Drowsiness: " + Integer.toString(progress+1));
+                break;
+            case R.id.pslide3:
+                pslide3_txt.setText("Anxiety: " + Integer.toString(progress+1));
+                break;
+            case R.id.pslide4:
+                pslide4_txt.setText("Depression: " + Integer.toString(progress+1));
                 break;
 
         }

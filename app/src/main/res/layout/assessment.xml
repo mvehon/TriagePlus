@@ -195,6 +195,128 @@
                 </LinearLayout>
 
             </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nausea: 10"
+                    android:id="@+id/pslide3_txt"
+                    android:textSize="18dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pslide3_txt"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/pslide3_leftbtn"
+                        android:src="@drawable/decbtn"
+                        android:background="@drawable/transparent" />
+
+                    <SeekBar
+                        android:id="@+id/pslide3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:max="9"
+                        android:progress="1"
+                        android:secondaryProgress="0"
+                        android:progressDrawable="@drawable/seekbar_progress1"
+                        android:layout_alignParentRight="true"
+                        android:indeterminate="false"
+                        android:indeterminateOnly="false"
+                        android:mirrorForRtl="false"
+                        android:splitTrack="false"
+                        android:layout_centerVertical="true" />
+                    <!--android:thumb="@drawable/seek_thumb">!-->
+
+                    <ImageButton
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/pslide3_rightbtn"
+                        android:src="@drawable/incbtn"
+                        android:background="@drawable/transparent" />
+                    <!--android:thumb="@drawable/seek_thumb">!-->
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nausea: 10"
+                    android:id="@+id/pslide4_txt"
+                    android:textSize="18dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pslide4_txt"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center">
+
+                    <ImageButton
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/pslide4_leftbtn"
+                        android:src="@drawable/decbtn"
+                        android:background="@drawable/transparent" />
+
+                    <SeekBar
+                        android:id="@+id/pslide4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:max="9"
+                        android:progress="1"
+                        android:secondaryProgress="0"
+                        android:progressDrawable="@drawable/seekbar_progress1"
+                        android:layout_alignParentRight="true"
+                        android:indeterminate="false"
+                        android:indeterminateOnly="false"
+                        android:mirrorForRtl="false"
+                        android:splitTrack="false"
+                        android:layout_centerVertical="true" />
+                    <!--android:thumb="@drawable/seek_thumb">!-->
+
+                    <ImageButton
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/pslide4_rightbtn"
+                        android:src="@drawable/incbtn"
+                        android:background="@drawable/transparent" />
+                    <!--android:thumb="@drawable/seek_thumb">!-->
+                </LinearLayout>
+
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -225,13 +347,4 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/scrollView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-
-    </RelativeLayout>
 </RelativeLayout>
