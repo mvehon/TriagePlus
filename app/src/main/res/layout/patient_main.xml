@@ -23,7 +23,7 @@
         android:layout_weight="1.04"></TableLayout>
 
     <Button
-        android:layout_width="311dp"
+        android:layout_width="390dp"
         android:layout_height="wrap_content"
         android:text="@string/patient_main_text"
         android:id="@+id/pmainbutton"
