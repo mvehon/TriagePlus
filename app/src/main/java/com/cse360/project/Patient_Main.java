@@ -90,26 +90,35 @@ public class Patient_Main extends Activity{
         prescriptionList = new ArrayList<Prescription>();
 
         //Some dummy test data
-        prescriptionList.add(new Prescription("Goofballs", "1/23/24", 30));
-        prescriptionList.add(new Prescription("Vicodin", "1/22/24", 20));
-        prescriptionList.add(new Prescription("Lunesta", "1/20/24", 40));
+        prescriptionList.add(new Prescription("Ambien", "4/19/2015", 30));
+        prescriptionList.add(new Prescription("Ibuprofen", "4/20/2015", 31));
 
-        for (int j = 0; j < prescriptionList.size(); j++) {
+        for (int j = 0; j <= prescriptionList.size(); j++) { // '<=' to handle case size() == 0
             TableRow rxRow = new TableRow(this); //Row showing prescription info
             for(int i = 0; i < NUM_COLUMNS; i++) {
                 TextView text = new TextView(this);
 
-                //Determine what content to display based on current loop index
-                switch(i) {
-                    case 0: //Prescription name
-                        text.setText(prescriptionList.get(j).getRx_name());
-                        break;
-                    case 1: //Prescription fill date
-                        text.setText(prescriptionList.get(j).getFill_date());
-                        break;
-                    case 2: //Prescription duration
-                        text.setText(prescriptionList.get(j).getDuration() + " days.");
-                        break;
+                if (j == prescriptionList.size() && j == 0) {
+                    if (i == 0)
+                        text.setText("No prescription history.");
+                    else
+                        text.setText("N\\A");
+                }
+                else if (j == prescriptionList.size())
+                    break;
+                else {
+                    //Determine what content to display based on current loop index
+                    switch (i) {
+                        case 0: //Prescription name
+                            text.setText(prescriptionList.get(j).getRx_name());
+                            break;
+                        case 1: //Prescription fill date
+                            text.setText(prescriptionList.get(j).getFill_date());
+                            break;
+                        case 2: //Prescription duration
+                            text.setText(prescriptionList.get(j).getDuration() + " days.");
+                            break;
+                    }
                 }
                 text.setBackgroundColor(Color.LTGRAY);
                 rxRow.addView(text);
