@@ -60,31 +60,35 @@ public class Start extends Activity {
         } else if (prefs.getBoolean("loggedin", false)) {
             setContentView(R.layout.splash);
             getActionBar().hide();
-            RelativeLayout splashbg = (RelativeLayout)findViewById(R.id.splashbg);
+            RelativeLayout splashbg = (RelativeLayout) findViewById(R.id.splashbg);
             if (prefs.getInt("user_type", 0) == 2) {
                 loadDoctorUser();
                 splashbg.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
+                        try {
+                            InternalStorage.writeObject(getBaseContext(), prefs.getString("curUser", ""), dr);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                         startActivity(new Intent(Start.this, Doctor_Main.class));
                         Start.this.finish();
                     }
-                }, 3000);
+                }, 1000);
             } else if (prefs.getInt("user_type", 0) == 1) {
                 loadPatientUser();
                 splashbg.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            InternalStorage.writeObject(getBaseContext(), pat.getFirstName()+pat.getLastName(), pat);
+                            InternalStorage.writeObject(getBaseContext(), prefs.getString("curUser", ""), pat);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
                         startActivity(new Intent(Start.this, Patient_Main.class));
                         Start.this.finish();
                     }
-                }, 2000);
+                }, 1000);
             } else {
                 startActivity(new Intent(Start.this, AddUser.class));
                 Start.this.finish();
@@ -124,36 +128,54 @@ public class Start extends Activity {
                         @Override
                         public void run() {
                             if (found) {
-                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).apply();
-                                prefs.edit().putString("user_fn", firstname.getText().toString()).apply();
-                                prefs.edit().putString("user_ln", lastname.getText().toString()).apply();
-                                prefs.edit().putString("user_pw", password.getText().toString()).apply();
-                                prefs.edit().putBoolean("loggedin", true).apply();
+                                prefs.edit().putString("curUser", firstname.getText().toString() + lastname.getText().toString()).commit();
+                                prefs.edit().putString("user_fn", firstname.getText().toString()).commit();
+                                prefs.edit().putString("user_ln", lastname.getText().toString()).commit();
+                                prefs.edit().putString("user_pw", password.getText().toString()).commit();
 
                                 if (type.equals("Patient")) {
                                     loadPatientUser();
-                                    try {
-                                        InternalStorage.writeObject(getBaseContext(), pat.getFirstName()+pat.getLastName(), pat);
-                                    } catch (IOException e1) {
-                                        Log.e("Writing", "Failed to write it to memory");
-                                        e1.printStackTrace();
-                                    }
-                                    prefs.edit().putInt("user_type", 1).apply();
+                                    login.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                InternalStorage.writeObject(getBaseContext(), prefs.getString("curUser", ""), pat);
+                                            } catch (IOException e1) {
+                                                Log.e("Writing", "Failed to write it to memory");
+                                                e1.printStackTrace();
+                                            }
+                                            prefs.edit().putInt("user_type", 1).commit();
                                             startActivity(new Intent(Start.this, Patient_Main.class));
+                                            prefs.edit().putBoolean("loggedin", true).commit();
                                             Start.this.finish();
-
+                                        }
+                                    }, 1000);
 
                                 } else if (type.equals("Doctor")) {
                                     loadDoctorUser(); //This may not entirely work yet
-                                    try {
-                                        InternalStorage.writeObject(getBaseContext(), dr.getFirstName()+dr.getLastName(), dr);
-                                    } catch (IOException e1) {
-                                        Log.e("Writing", "Failed to write it to memory");
-                                        e1.printStackTrace();
-                                    }
-                                    prefs.edit().putInt("user_type", 2).apply();
+                                    //getBaseContext().deleteFile(dr.getFirstName()+dr.getLastName());
+                                    //String derp = "";
+                                    //InternalStorage.readObject(getBaseContext(), "", dr);
+                                    login.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                InternalStorage.writeObject(getBaseContext(), prefs.getString("curUser", ""), dr);
+                                                written = true;
+                                            } catch (IOException e1) {
+                                                Log.e("Writing", "Failed to write it to memory");
+                                                written = false;
+                                                e1.printStackTrace();
+                                            }
+                                            prefs.edit().putInt("user_type", 2).commit();
+
+                                            prefs.edit().putBoolean("loggedin", true).commit();
                                             startActivity(new Intent(Start.this, Doctor_Main.class));
                                             Start.this.finish();
+
+                                        }
+                                    }, 1000);
+
                                 }
                             }
                         }
@@ -241,9 +263,9 @@ public class Start extends Activity {
         });
     }
 
-    public void loadPatientUser(){
+    public void loadPatientUser() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
-        query.whereEqualTo("username", prefs.getString("curUser",""));
+        query.whereEqualTo("username", prefs.getString("curUser", ""));
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                 if (e == null) {
@@ -267,10 +289,10 @@ public class Start extends Activity {
         });
     }
 
-    public void loadDoctorUser(){
+    public void loadDoctorUser() {
         {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
-            query.whereEqualTo("username", prefs.getString("curUser",""));
+            query.whereEqualTo("username", prefs.getString("curUser", ""));
             query.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                     if (e == null) {
@@ -284,14 +306,13 @@ public class Start extends Activity {
                             //pt.setSymptom0(temppt.getList("symptom0"));
 
                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
-                            query.whereEqualTo("doctor", prefs.getString("curUser",""));
+                            query.whereEqualTo("doctor", prefs.getString("curUser", ""));
                             query.findInBackground(new FindCallback<ParseObject>() {
                                 public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                                     if (e == null) {
                                         Log.d("score", "Retrieved " + parseObjects.size() + " people");
                                         if (parseObjects.size() > 0) {
-                                            for(int i=0; i<parseObjects.size();i++){
-                                                //Toast.makeText(getBaseContext(), "adding patient"+ Integer.toString(i), Toast.LENGTH_SHORT).show();
+                                            for (int i = 0; i < parseObjects.size(); i++) {
                                                 ParseObject temppt = parseObjects.get(i);
                                                 drpat = new Patient();
                                                 drpat.setFirstName(temppt.get("first_name").toString());
@@ -318,7 +339,6 @@ public class Start extends Activity {
                                     }
                                 }
                             });
-
 
 
                         }
