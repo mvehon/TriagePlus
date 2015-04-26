@@ -152,6 +152,8 @@ public class Patient implements Serializable {
                         pt.add("symptom0", getSymptom0().get(getSymptom0().size() - 1));
                         pt.add("symptom1", getSymptom1().get(getSymptom1().size() - 1));
                         pt.add("symptom2", getSymptom2().get(getSymptom2().size() - 1));
+                        pt.add("symptom3", getSymptom3().get(getSymptom3().size() - 1));
+                        pt.add("symptom4", getSymptom4().get(getSymptom4().size() - 1));
                         pt.saveInBackground();
                     }
                 }
@@ -170,6 +172,12 @@ public class Patient implements Serializable {
                     break;
                 case 2:
                     symptom2.add(pains[i]);
+                    break;
+                case 3:
+                    symptom3.add(pains[i]);
+                    break;
+                case 4:
+                    symptom4.add(pains[i]);
                     break;
             }
         }
