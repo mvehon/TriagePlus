@@ -101,7 +101,7 @@ public class Assessment extends Activity implements SeekBar.OnSeekBarChangeListe
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int painArray[] = {pslide0.getProgress(),pslide1.getProgress(),pslide2.getProgress(), pslide3.getProgress(), pslide4.getProgress()};
+                int painArray[] = {pslide0.getProgress()+1,pslide1.getProgress()+1,pslide2.getProgress()+1, pslide3.getProgress()+1, pslide4.getProgress()+1};
                 curUser.addValues(painArray);
                 curUser.updateOnServer();
                 //Close activity and start Patient_Main
