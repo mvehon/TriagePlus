@@ -1,6 +1,5 @@
 package com.cse360.project;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,18 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +30,8 @@ public class Start extends Activity {
     Doctor dr = new Doctor();
     Patient pat = new Patient();
     Patient drpat = new Patient();
+    Prescription pre = new Prescription();
     boolean written = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -269,19 +261,36 @@ public class Start extends Activity {
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                 if (e == null) {
-                    Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                    Log.d("score", "Retrieved " + parseObjects.size() + " patients");
                     if (parseObjects.size() > 0) {
                         ParseObject temppt = parseObjects.get(0);
                         pat.setFirstName(temppt.get("first_name").toString());
                         pat.setLastName(temppt.get("last_name").toString());
                         pat.setPassword(temppt.get("password").toString());
                         pat.setDoctor(temppt.get("doctor").toString());
-                        //TODO get pain values and put them into array
-                        //TODO get prescriptions belonging to this patient
                         List<Integer> temp = new ArrayList<Integer>();
                         temp = temppt.getList("symptom0");
                         pat.setSymptom0(temp);
-                    }
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Prescription");
+                        query.whereEqualTo("patient", prefs.getString("curUser", ""));
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                                if (e == null) {
+                                    Log.d("score", "Retrieved " + parseObjects.size() + " prescriptions");
+                                    if (parseObjects.size() > 0) {
+                                        for(int i=0; i<parseObjects.size();i++){
+                                            ParseObject temppre = parseObjects.get(i);
+                                            pre = new Prescription();
+                                            pre.setPatient(temppre.get("patient").toString());
+                                            pre.setAllergies((Boolean) temppre.get("allergies"));
+                                            pre.setRefil((Boolean) temppre.get("refil"));
+                                            pre.setRx_name(temppre.get("rx_name").toString());
+                                            pre.setFill_date(temppre.get("fill_date").toString());
+                                            pre.setDuration(Integer.parseInt(temppre.get("duration").toString()));
+                                            Prescription temppresc = pre;
+                                            pat.addPrescription(temppresc);
+                                        }
+                                    }}}});}
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
                 }
@@ -296,7 +305,7 @@ public class Start extends Activity {
             query.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                     if (e == null) {
-                        Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                        Log.d("score", "Retrieved " + parseObjects.size() + " doctors");
                         if (parseObjects.size() > 0) {
                             ParseObject tempdr = parseObjects.get(0);
                             dr.setFirstName(tempdr.get("first_name").toString());
@@ -310,7 +319,7 @@ public class Start extends Activity {
                             query.findInBackground(new FindCallback<ParseObject>() {
                                 public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
                                     if (e == null) {
-                                        Log.d("score", "Retrieved " + parseObjects.size() + " people");
+                                        Log.d("score", "Retrieved " + parseObjects.size() + " patients");
                                         if (parseObjects.size() > 0) {
                                             for (int i = 0; i < parseObjects.size(); i++) {
                                                 ParseObject temppt = parseObjects.get(i);
