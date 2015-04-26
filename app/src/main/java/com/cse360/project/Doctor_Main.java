@@ -277,15 +277,17 @@ public class Doctor_Main extends FragmentActivity implements
                         ps1.setText(Integer.toString(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1)));
                         ps2.setText(Integer.toString(pts.get(i).getSymptom1().get(pts.get(i).getSymptom1().size() - 1)));
                         ps3.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom2().size() - 1)));
-                        //ps4.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom3().size() - 1)));
-                        //ps5.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom4().size() - 1)));
+                        ps4.setText(Integer.toString(pts.get(i).getSymptom3().get(pts.get(i).getSymptom3().size() - 1)));
+                        ps5.setText(Integer.toString(pts.get(i).getSymptom4().get(pts.get(i).getSymptom4().size() - 1)));
                     }catch (NullPointerException e){
+                        e.printStackTrace();
                         ps1.setText("N/A");
                         ps2.setText("N/A");
                         ps3.setText("N/A");
                         ps4.setText("N/A");
                         ps5.setText("N/A");
                     }catch(ArrayIndexOutOfBoundsException e){
+                        e.printStackTrace();
                         ps1.setText("N/A");
                         ps2.setText("N/A");
                         ps3.setText("N/A");

@@ -269,8 +269,20 @@ public class Start extends Activity {
                         pat.setPassword(temppt.get("password").toString());
                         pat.setDoctor(temppt.get("doctor").toString());
                         List<Integer> temp = new ArrayList<Integer>();
+                        List<Integer> temp1 = new ArrayList<Integer>();
+                        List<Integer> temp2 = new ArrayList<Integer>();
+                        List<Integer> temp3 = new ArrayList<Integer>();
+                        List<Integer> temp4 = new ArrayList<Integer>();
                         temp = temppt.getList("symptom0");
-                        pat.setSymptom0(temp);
+                        drpat.setSymptom0(temp);
+                        temp1 = temppt.getList("symptom1");
+                        drpat.setSymptom1(temp1);
+                        temp2 = temppt.getList("symptom2");
+                        drpat.setSymptom2(temp2);
+                        temp3 = temppt.getList("symptom3");
+                        drpat.setSymptom3(temp3);
+                        temp4 = temppt.getList("symptom4");
+                        drpat.setSymptom4(temp4);
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Prescription");
                         query.whereEqualTo("patient", prefs.getString("curUser", ""));
                         query.findInBackground(new FindCallback<ParseObject>() {
@@ -311,8 +323,6 @@ public class Start extends Activity {
                             dr.setFirstName(tempdr.get("first_name").toString());
                             dr.setLastName(tempdr.get("last_name").toString());
                             dr.setPassword(tempdr.get("password").toString());
-                            //dr.setSymptom0((List<Integer>) temppt.getList("symptom0"));
-                            //pt.setSymptom0(temppt.getList("symptom0"));
 
                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
                             query.whereEqualTo("doctor", prefs.getString("curUser", ""));
@@ -333,12 +343,18 @@ public class Start extends Activity {
                                                 List<Integer> temp = new ArrayList<Integer>();
                                                 List<Integer> temp1 = new ArrayList<Integer>();
                                                 List<Integer> temp2 = new ArrayList<Integer>();
+                                                List<Integer> temp3 = new ArrayList<Integer>();
+                                                List<Integer> temp4 = new ArrayList<Integer>();
                                                 temp = temppt.getList("symptom0");
                                                 drpat.setSymptom0(temp);
                                                 temp1 = temppt.getList("symptom1");
                                                 drpat.setSymptom1(temp1);
                                                 temp2 = temppt.getList("symptom2");
                                                 drpat.setSymptom2(temp2);
+                                                temp3 = temppt.getList("symptom3");
+                                                drpat.setSymptom3(temp3);
+                                                temp4 = temppt.getList("symptom4");
+                                                drpat.setSymptom4(temp4);
                                                 Patient temppat = drpat;
                                                 dr.addPatient(temppat);
                                             }
