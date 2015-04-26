@@ -263,45 +263,80 @@ public class Doctor_Main extends FragmentActivity implements
                 }
                 final LinearLayout pt_ll = (LinearLayout) v.findViewById(R.id.pt_ll);
                 for (int i = 0; i < pts.size(); i++) {
-                    pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
-                    LinearLayout pt_ll_inner = (LinearLayout) pt_ll.findViewById(R.id.pt_ll_inner);
-                    TextView pname = (TextView) pt_ll_inner.findViewById(R.id.pname);
-                    TextView ps1 = (TextView) pt_ll_inner.findViewById(R.id.ps1);
-                    TextView ps2 = (TextView) pt_ll_inner.findViewById(R.id.ps2);
-                    TextView ps3 = (TextView) pt_ll_inner.findViewById(R.id.ps3);
-                    TextView ps4 = (TextView) pt_ll_inner.findViewById(R.id.ps4);
-                    TextView ps5 = (TextView) pt_ll_inner.findViewById(R.id.ps5);
+                    if(isCritical(pts.get(i)) && curView ==1){
+                        pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
+                        LinearLayout pt_ll_inner = (LinearLayout) pt_ll.findViewById(R.id.pt_ll_inner);
+                        TextView pname = (TextView) pt_ll_inner.findViewById(R.id.pname);
+                        TextView ps1 = (TextView) pt_ll_inner.findViewById(R.id.ps1);
+                        TextView ps2 = (TextView) pt_ll_inner.findViewById(R.id.ps2);
+                        TextView ps3 = (TextView) pt_ll_inner.findViewById(R.id.ps3);
+                        TextView ps4 = (TextView) pt_ll_inner.findViewById(R.id.ps4);
+                        TextView ps5 = (TextView) pt_ll_inner.findViewById(R.id.ps5);
 
-                    pname.setText(pts.get(i).getFirstName() + " " + pts.get(i).getLastName());
-                    try{ pts.get(i).getSymptom0();
-                        ps1.setText(Integer.toString(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1)));
-                        ps2.setText(Integer.toString(pts.get(i).getSymptom1().get(pts.get(i).getSymptom1().size() - 1)));
-                        ps3.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom2().size() - 1)));
-                        ps4.setText(Integer.toString(pts.get(i).getSymptom3().get(pts.get(i).getSymptom3().size() - 1)));
-                        ps5.setText(Integer.toString(pts.get(i).getSymptom4().get(pts.get(i).getSymptom4().size() - 1)));
-                    }catch (NullPointerException e){
-                        e.printStackTrace();
-                        ps1.setText("N/A");
-                        ps2.setText("N/A");
-                        ps3.setText("N/A");
-                        ps4.setText("N/A");
-                        ps5.setText("N/A");
-                    }catch(ArrayIndexOutOfBoundsException e){
-                        e.printStackTrace();
-                        ps1.setText("N/A");
-                        ps2.setText("N/A");
-                        ps3.setText("N/A");
-                        ps4.setText("N/A");
-                        ps5.setText("N/A");
+                        pname.setText(pts.get(i).getFirstName() + " " + pts.get(i).getLastName());
+                        try{ pts.get(i).getSymptom0();
+                            ps1.setText(Integer.toString(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1)));
+                            ps2.setText(Integer.toString(pts.get(i).getSymptom1().get(pts.get(i).getSymptom1().size() - 1)));
+                            ps3.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom2().size() - 1)));
+                            ps4.setText(Integer.toString(pts.get(i).getSymptom3().get(pts.get(i).getSymptom3().size() - 1)));
+                            ps5.setText(Integer.toString(pts.get(i).getSymptom4().get(pts.get(i).getSymptom4().size() - 1)));
+                        }catch (NullPointerException e){
+                            e.printStackTrace();
+                            ps1.setText("N/A");
+                            ps2.setText("N/A");
+                            ps3.setText("N/A");
+                            ps4.setText("N/A");
+                            ps5.setText("N/A");
+                        }catch(ArrayIndexOutOfBoundsException e){
+                            e.printStackTrace();
+                            ps1.setText("N/A");
+                            ps2.setText("N/A");
+                            ps3.setText("N/A");
+                            ps4.setText("N/A");
+                            ps5.setText("N/A");
+                        }
+                        pt_ll_inner.setId(pt_ll.getChildCount());
                     }
+                    else if(curView==2){
+                        pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
+                        LinearLayout pt_ll_inner = (LinearLayout) pt_ll.findViewById(R.id.pt_ll_inner);
+                        TextView pname = (TextView) pt_ll_inner.findViewById(R.id.pname);
+                        TextView ps1 = (TextView) pt_ll_inner.findViewById(R.id.ps1);
+                        TextView ps2 = (TextView) pt_ll_inner.findViewById(R.id.ps2);
+                        TextView ps3 = (TextView) pt_ll_inner.findViewById(R.id.ps3);
+                        TextView ps4 = (TextView) pt_ll_inner.findViewById(R.id.ps4);
+                        TextView ps5 = (TextView) pt_ll_inner.findViewById(R.id.ps5);
+
+                        pname.setText(pts.get(i).getFirstName() + " " + pts.get(i).getLastName());
+                        try{ pts.get(i).getSymptom0();
+                            ps1.setText(Integer.toString(pts.get(i).getSymptom0().get(pts.get(i).getSymptom0().size() - 1)));
+                            ps2.setText(Integer.toString(pts.get(i).getSymptom1().get(pts.get(i).getSymptom1().size() - 1)));
+                            ps3.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom2().size() - 1)));
+                            ps4.setText(Integer.toString(pts.get(i).getSymptom3().get(pts.get(i).getSymptom3().size() - 1)));
+                            ps5.setText(Integer.toString(pts.get(i).getSymptom4().get(pts.get(i).getSymptom4().size() - 1)));
+                        }catch (NullPointerException e){
+                            e.printStackTrace();
+                            ps1.setText("N/A");
+                            ps2.setText("N/A");
+                            ps3.setText("N/A");
+                            ps4.setText("N/A");
+                            ps5.setText("N/A");
+                        }catch(ArrayIndexOutOfBoundsException e){
+                            e.printStackTrace();
+                            ps1.setText("N/A");
+                            ps2.setText("N/A");
+                            ps3.setText("N/A");
+                            ps4.setText("N/A");
+                            ps5.setText("N/A");
+                        }
 
 
-                    pt_ll_inner.setId(pt_ll.getChildCount());
-
+                        pt_ll_inner.setId(pt_ll.getChildCount());}
+                }
+                if(pt_ll.getChildCount()==0){
+                    pt_ll.addView(inflates.inflate(R.layout.empty, null));
                 }
             }
-
-
             LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearSubmit);
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -379,4 +414,23 @@ public class Doctor_Main extends FragmentActivity implements
         }
     }
 */
+
+    public static Boolean isCritical(Patient pt) {
+        if (pt.getSymptom0().get(pt.getSymptom0().size() - 1) >= 8) {
+            return true;
+        }
+        if (pt.getSymptom1().get(pt.getSymptom1().size() - 1) >= 8) {
+            return true;
+        }
+        if (pt.getSymptom2().get(pt.getSymptom2().size() - 1) >= 8) {
+            return true;
+        }
+        if (pt.getSymptom3().get(pt.getSymptom3().size() - 1) >= 8) {
+            return true;
+        }
+        if (pt.getSymptom4().get(pt.getSymptom4().size() - 1) >= 8) {
+            return true;
+        }
+        return false;
+    }
 }
