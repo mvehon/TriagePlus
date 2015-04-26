@@ -297,7 +297,7 @@ public class Doctor_Main extends FragmentActivity implements
                         }
                         pt_ll_inner.setId(pt_ll.getChildCount());
                     }
-                    else if(curView==2){
+                    else if(!isCritical(pts.get(i)) && curView==2){
                         pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
                         LinearLayout pt_ll_inner = (LinearLayout) pt_ll.findViewById(R.id.pt_ll_inner);
                         TextView pname = (TextView) pt_ll_inner.findViewById(R.id.pname);
@@ -314,6 +314,11 @@ public class Doctor_Main extends FragmentActivity implements
                             ps3.setText(Integer.toString(pts.get(i).getSymptom2().get(pts.get(i).getSymptom2().size() - 1)));
                             ps4.setText(Integer.toString(pts.get(i).getSymptom3().get(pts.get(i).getSymptom3().size() - 1)));
                             ps5.setText(Integer.toString(pts.get(i).getSymptom4().get(pts.get(i).getSymptom4().size() - 1)));
+                            stylize(ps1,pts.get(i).getSymptom0());
+                            stylize(ps2,pts.get(i).getSymptom1());
+                            stylize(ps3,pts.get(i).getSymptom2());
+                            stylize(ps4,pts.get(i).getSymptom3());
+                            stylize(ps5,pts.get(i).getSymptom4());
                         }catch (NullPointerException e){
                             e.printStackTrace();
                             ps1.setText("N/A");
@@ -372,48 +377,22 @@ public class Doctor_Main extends FragmentActivity implements
         }
 
         public void stylize(TextView tx, ArrayList<Integer> ar) {
-            int dif = ar.get(ar.size() - 2) - ar.get(ar.size() - 1);
-            if (dif > 0) {
-                tx.setTextColor(getResources().getColor(R.color.green));
-                if (dif > 1) {
-                    tx.setTypeface(null, Typeface.BOLD);
-                }
-            } else if (dif < 0) {
-                tx.setTextColor(getResources().getColor(R.color.red));
-                if (dif < -1) {
-                    tx.setTypeface(null, Typeface.BOLD);
+            if (ar.size() >= 2) {
+                int dif = ar.get(ar.size() - 2) - ar.get(ar.size() - 1);
+                if (dif > 0) {
+                    tx.setTextColor(getResources().getColor(R.color.green));
+                    if (dif > 1) {
+                        tx.setTypeface(null, Typeface.BOLD);
+                    }
+                } else if (dif < 0) {
+                    tx.setTextColor(getResources().getColor(R.color.red));
+                    if (dif < -1) {
+                        tx.setTypeface(null, Typeface.BOLD);
+                    }
                 }
             }
         }
-
     }
-/*
-    public void addPatientInfo(ParseObject p) {
-        List<String> ptusernames = new ArrayList<String>();
-        ptusernames = p.getList("ptusernames");
-        for (int i = 0; i < ptusernames.size(); i++) {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Patient");
-            query.whereEqualTo("username", prefs.getString("curUser", ""));
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> parseObjects, ParseException e) {
-                    if (e == null) {
-                        if (parseObjects.size() > 0) {
-                            //TODO pull patients from the server here
-                            for (int i = 0; i < parseObjects.size(); i++) {
-                                Patient pt = new Patient();
-                                pt.setFirstName(parseObjects.get(i).get("first_name").toString());
-                                pt.setLastName(parseObjects.get(i).get("last_name").toString());
-                                curUser.addPatient(pt);
-                            }
-                            pts = curUser.getPts();
-                        }
-                    }
-                }
-            });
-        }
-    }
-*/
 
     public static Boolean isCritical(Patient pt) {
         int total;
