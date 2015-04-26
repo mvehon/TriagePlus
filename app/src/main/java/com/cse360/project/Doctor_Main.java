@@ -416,6 +416,7 @@ public class Doctor_Main extends FragmentActivity implements
 */
 
     public static Boolean isCritical(Patient pt) {
+        int total;
         if (pt.getSymptom0().get(pt.getSymptom0().size() - 1) >= 8) {
             return true;
         }
@@ -431,6 +432,15 @@ public class Doctor_Main extends FragmentActivity implements
         if (pt.getSymptom4().get(pt.getSymptom4().size() - 1) >= 8) {
             return true;
         }
+        total = pt.getSymptom0().get(pt.getSymptom0().size() - 1);
+        total += pt.getSymptom1().get(pt.getSymptom1().size() - 1);
+        total += pt.getSymptom2().get(pt.getSymptom2().size() - 1);
+        total += pt.getSymptom3().get(pt.getSymptom3().size() - 1);
+        total += pt.getSymptom4().get(pt.getSymptom4().size() - 1);
+        if(total>=35){
+            return true;
+        }
+
         return false;
     }
 }
