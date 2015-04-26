@@ -47,6 +47,9 @@ public class Patient_Main extends Activity{
             e.printStackTrace();
         }
 
+        prescriptionList = curUser.getPrescList();
+
+
         List<Integer> symp0vals = new ArrayList<Integer>();
         symp0vals = curUser.getSymptom0();
 
@@ -87,11 +90,7 @@ public class Patient_Main extends Activity{
                         (TableLayout.LayoutParams.WRAP_CONTENT,
                                 TableLayout.LayoutParams.WRAP_CONTENT));
 
-        prescriptionList = new ArrayList<Prescription>();
 
-        //Some dummy test data
-        prescriptionList.add(new Prescription("Ambien", "4/19/2015", 30));
-        prescriptionList.add(new Prescription("Ibuprofen", "4/20/2015", 31));
 
         for (int j = 0; j <= prescriptionList.size(); j++) { // '<=' to handle case size() == 0
             TableRow rxRow = new TableRow(this); //Row showing prescription info
