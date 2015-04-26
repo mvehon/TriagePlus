@@ -16,6 +16,7 @@ public class Patient implements Serializable {
     private String password;
     private String doctor;
     private ArrayList<Integer> symptom0, symptom1, symptom2, symptom3, symptom4;
+    private ArrayList<Prescription> presc;
 
     public Patient() {
         first_name = "";
@@ -26,6 +27,7 @@ public class Patient implements Serializable {
         symptom2 = new ArrayList<Integer>();
         symptom3 = new ArrayList<Integer>();
         symptom4 = new ArrayList<Integer>();
+        presc = new ArrayList<Prescription>();
     }
 
     public Patient(String fn, String ln, String pw, String pt) {
@@ -38,6 +40,8 @@ public class Patient implements Serializable {
         symptom2 = new ArrayList<Integer>();
         symptom3 = new ArrayList<Integer>();
         symptom4 = new ArrayList<Integer>();
+        presc = new ArrayList<Prescription>();
+
     }
 
     public String getFirstName() {
@@ -110,6 +114,18 @@ public class Patient implements Serializable {
 
     public void setSymptom4(List<Integer> sym) {
         symptom4 = (ArrayList<Integer>) sym;
+    }
+
+    public ArrayList<Prescription> getPrescList() {
+        return presc;
+    }
+
+    public void setPrescList(List<Prescription> pre) {
+        presc = (ArrayList<Prescription>) pre;
+    }
+
+    public void addPrescription(Prescription pre){
+        presc.add(pre);
     }
 
     public void createOnServer() {
