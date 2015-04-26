@@ -112,11 +112,14 @@ public class PrescriptionForm extends Activity {
                             prescription1.setRx_name(prescription.getText().toString());
                             prescription1.setFill_date(dateCorrect);
                             prescription1.setDuration(Integer.parseInt(duration));
+                            prescription1.setPatient(patient_spinner.getSelectedItem().toString());
+
+                            prescription1.createOnServer();
 
                             Mail m = new Mail("triageplusapp@gmail.com", "cse360project");
                             String[] toArr = {"poyopoyo91@gmail.com"};
                             m.setTo(toArr);
-                            m.setBody(prescription1.toEmail(patient_spinner.getSelectedItem().toString(), curUser.toString()));
+                            m.setBody(prescription1.toEmail(curUser.toString()));
 
                             try {
                                 if(m.send()) {
