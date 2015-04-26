@@ -40,6 +40,7 @@ public class Prescription implements Serializable{
         presc.put("allergies", allergies);
         presc.put("refil", refil);
         presc.put("fill_date", fill_date);
+        presc.put("duration", duration);
         presc.saveEventually();
     }
     public String toEmail(String doctorName){
