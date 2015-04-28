@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Prescription History \n\n\n"
+        android:text="Prescription History"
+        android:layout_marginBottom="15dp"
         android:id="@+id/textView6"
         android:layout_gravity="center_horizontal" />
 
@@ -17,13 +18,19 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/table"
         android:layout_width="match_parent"
-        android:layout_height="109dp"
+        android:layout_height="wrap_content"
         android:shrinkColumns="*"
         android:stretchColumns="*"
-        android:layout_weight="1.04"></TableLayout>
+        android:layout_marginBottom="10dp"></TableLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pt_ll"></LinearLayout>
 
     <Button
-        android:layout_width="390dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/patient_main_text"
         android:id="@+id/pmainbutton"

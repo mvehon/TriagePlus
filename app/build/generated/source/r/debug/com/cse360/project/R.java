@@ -990,7 +990,7 @@ containing a value of this type.
         public static final int imageView=0x7f090048;
         public static final int imageView2=0x7f09006e;
         public static final int last_name_txt=0x7f090041;
-        public static final int linearSubmit=0x7f09006b;
+        public static final int linearSubmit=0x7f09006c;
         public static final int listMode=0x7f090006;
         public static final int list_item=0x7f090029;
         public static final int login=0x7f090085;
@@ -1003,7 +1003,7 @@ containing a value of this type.
         public static final int password=0x7f090065;
         public static final int patient_spinner=0x7f090071;
         public static final int pmain=0x7f090067;
-        public static final int pmainbutton=0x7f09006a;
+        public static final int pmainbutton=0x7f09006b;
         public static final int pname=0x7f090077;
         public static final int pname_side=0x7f090076;
         public static final int prescriptionText=0x7f090072;
@@ -1039,7 +1039,7 @@ containing a value of this type.
         public static final int pslide4_leftbtn=0x7f09005b;
         public static final int pslide4_rightbtn=0x7f09005d;
         public static final int pslide4_txt=0x7f09005a;
-        public static final int pt_ll=0x7f09006c;
+        public static final int pt_ll=0x7f09006a;
         public static final int pt_ll_inner=0x7f090075;
         public static final int pw_txt=0x7f090042;
         public static final int radio=0x7f09002f;
