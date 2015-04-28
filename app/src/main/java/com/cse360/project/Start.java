@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -245,6 +247,7 @@ public class Start extends Activity {
                             found = true;
                             type = temptype;
                         } else {
+                            Toast.makeText(getBaseContext(), "The password you entered is incorrect", Toast.LENGTH_LONG).show();
                             Log.d("comp: ", "Not the same");
                         }
                     }
@@ -274,15 +277,15 @@ public class Start extends Activity {
                         List<Integer> temp3 = new ArrayList<Integer>();
                         List<Integer> temp4 = new ArrayList<Integer>();
                         temp = temppt.getList("symptom0");
-                        drpat.setSymptom0(temp);
+                        pat.setSymptom0(temp);
                         temp1 = temppt.getList("symptom1");
-                        drpat.setSymptom1(temp1);
+                        pat.setSymptom1(temp1);
                         temp2 = temppt.getList("symptom2");
-                        drpat.setSymptom2(temp2);
+                        pat.setSymptom2(temp2);
                         temp3 = temppt.getList("symptom3");
-                        drpat.setSymptom3(temp3);
+                        pat.setSymptom3(temp3);
                         temp4 = temppt.getList("symptom4");
-                        drpat.setSymptom4(temp4);
+                        pat.setSymptom4(temp4);
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Prescription");
                         query.whereEqualTo("patient", prefs.getString("curUser", ""));
                         query.findInBackground(new FindCallback<ParseObject>() {
