@@ -66,7 +66,8 @@ public class Patient_Main extends Activity{
             }
         });
 
-        welcomeText.setText("\t\t\t\t\t\t\t\tWelcome " + curUser.getFirstName() + " " + curUser.getLastName());
+        welcomeText.setText("\t\t\t\t\t\t\t\t\t\tWelcome "
+                + curUser.getFirstName() + " " + curUser.getLastName());
         addPrescriptionTable(); //Add the table to the activity
 
         super.onCreate(savedInstanceState);
