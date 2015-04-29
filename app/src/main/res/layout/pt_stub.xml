@@ -16,7 +16,8 @@
             android:id="@+id/pname_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Patient: "
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="\t\t\t\t\t\t\t\t\tPrevious Symptom Report"
             android:textSize="18dp" />
 
         <TextView
@@ -131,5 +132,4 @@
             android:text="TextView"
             android:textSize="18dp" />
     </LinearLayout>
-
 </LinearLayout>

@@ -41,6 +41,7 @@ public class Patient_Main extends Activity{
         curUser = new Patient();
         String username = prefs.getString("curUser", "");
 
+
         try {
             curUser = (Patient) InternalStorage.readObject(this, username);
         } catch (IOException e) {
@@ -48,7 +49,7 @@ public class Patient_Main extends Activity{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
+        TextView welcomeText = (TextView) findViewById(R.id.welcome);
         prescriptionList = curUser.getPrescList();
 
 
@@ -65,6 +66,50 @@ public class Patient_Main extends Activity{
             }
         });
 
+        welcomeText.setText("\t\t\t\t\t\t\t\tWelcome " + curUser.getFirstName() + " " + curUser.getLastName());
+        addPrescriptionTable(); //Add the table to the activity
+
+        super.onCreate(savedInstanceState);
+
+        final LinearLayout pt_ll = (LinearLayout) findViewById(R.id.pt_ll);
+        LayoutInflater inflates = null;
+        try {
+            inflates = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        } catch (NullPointerException p) {
+        }
+        pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
+        LinearLayout pt_ll_inner = (LinearLayout) pt_ll.findViewById(R.id.pt_ll_inner);
+        TextView ps1 = (TextView) pt_ll_inner.findViewById(R.id.ps1);
+        TextView ps2 = (TextView) pt_ll_inner.findViewById(R.id.ps2);
+        TextView ps3 = (TextView) pt_ll_inner.findViewById(R.id.ps3);
+        TextView ps4 = (TextView) pt_ll_inner.findViewById(R.id.ps4);
+        TextView ps5 = (TextView) pt_ll_inner.findViewById(R.id.ps5);
+
+        try{ curUser.getSymptom0();
+            ps1.setText(Integer.toString(curUser.getSymptom0().get(curUser.getSymptom0().size() - 1)));
+            ps2.setText(Integer.toString(curUser.getSymptom1().get(curUser.getSymptom1().size() - 1)));
+            ps3.setText(Integer.toString(curUser.getSymptom2().get(curUser.getSymptom2().size() - 1)));
+            ps4.setText(Integer.toString(curUser.getSymptom3().get(curUser.getSymptom3().size() - 1)));
+            ps5.setText(Integer.toString(curUser.getSymptom4().get(curUser.getSymptom4().size() - 1)));
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            ps1.setText("N/A");
+            ps2.setText("N/A");
+            ps3.setText("N/A");
+            ps4.setText("N/A");
+            ps5.setText("N/A");
+        }catch(ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+            ps1.setText("N/A");
+            ps2.setText("N/A");
+            ps3.setText("N/A");
+            ps4.setText("N/A");
+            ps5.setText("N/A");
+        }
+        pt_ll_inner.setId(pt_ll.getChildCount());
+    }
+
+    public void addPrescriptionTable() {
         table = (TableLayout)findViewById(R.id.table);
         TableRow row = new TableRow(this); //First row containing titles
 
@@ -141,50 +186,8 @@ public class Patient_Main extends Activity{
                             (TableLayout.LayoutParams.WRAP_CONTENT,
                                     TableLayout.LayoutParams.WRAP_CONTENT));
         }
-        super.onCreate(savedInstanceState);
-
-        final LinearLayout pt_ll = (LinearLayout) findViewById(R.id.pt_ll);
-        LayoutInflater inflates = null;
-        try {
-            inflates = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        } catch (NullPointerException p) {
-        }
-        pt_ll.addView(inflates.inflate(R.layout.pt_stub, null));
-            LinearLayout pt_ll_inner = (LinearLayout) pt_ll.findViewById(R.id.pt_ll_inner);
-            TextView pname = (TextView) pt_ll_inner.findViewById(R.id.pname);
-            TextView ps1 = (TextView) pt_ll_inner.findViewById(R.id.ps1);
-            TextView ps2 = (TextView) pt_ll_inner.findViewById(R.id.ps2);
-            TextView ps3 = (TextView) pt_ll_inner.findViewById(R.id.ps3);
-            TextView ps4 = (TextView) pt_ll_inner.findViewById(R.id.ps4);
-            TextView ps5 = (TextView) pt_ll_inner.findViewById(R.id.ps5);
-
-            pname.setText(curUser.getFirstName() + " " + curUser.getLastName());
-            try{ curUser.getSymptom0();
-                ps1.setText(Integer.toString(curUser.getSymptom0().get(curUser.getSymptom0().size() - 1)));
-                ps2.setText(Integer.toString(curUser.getSymptom1().get(curUser.getSymptom1().size() - 1)));
-                ps3.setText(Integer.toString(curUser.getSymptom2().get(curUser.getSymptom2().size() - 1)));
-                ps4.setText(Integer.toString(curUser.getSymptom3().get(curUser.getSymptom3().size() - 1)));
-                ps5.setText(Integer.toString(curUser.getSymptom4().get(curUser.getSymptom4().size() - 1)));
-            }catch (NullPointerException e){
-                e.printStackTrace();
-                ps1.setText("N/A");
-                ps2.setText("N/A");
-                ps3.setText("N/A");
-                ps4.setText("N/A");
-                ps5.setText("N/A");
-            }catch(ArrayIndexOutOfBoundsException e){
-                e.printStackTrace();
-                ps1.setText("N/A");
-                ps2.setText("N/A");
-                ps3.setText("N/A");
-                ps4.setText("N/A");
-                ps5.setText("N/A");
-            }
-            pt_ll_inner.setId(pt_ll.getChildCount());
-
-
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
