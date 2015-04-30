@@ -27,10 +27,13 @@ public class Prescription implements Serializable{
     }
 
 
-    public Prescription(String rx_name, String fill_date, int duration) {
+    public Prescription(String rx_name, String fill_date, int duration, String patient,
+                        boolean allergies, boolean refil) {
         this.rx_name = rx_name;
         this.fill_date = fill_date;
         this.duration = duration;
+        this.allergies = allergies;
+        this.refil = refil;
     }
 
     public void createOnServer(){
