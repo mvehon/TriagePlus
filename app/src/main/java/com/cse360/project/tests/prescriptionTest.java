@@ -5,7 +5,7 @@ package com.cse360.project.tests;
 /**
  * Created by Kody on 4/29/2015.
  */
-
+/* Commented out to run Unit Test 1
 //this verifies the prescriptions built in date normalization as well as the error checking
 public class prescriptionTest {
    // public static void main(String[] args){
@@ -20,3 +20,4 @@ public class prescriptionTest {
         Prescription p5 = new Prescription("D", "04/27/15", 3, "Kody", false, true);
   //  }
 }
+*/

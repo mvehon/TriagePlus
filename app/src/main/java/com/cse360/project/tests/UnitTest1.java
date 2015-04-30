@@ -68,8 +68,9 @@ public class UnitTest1
     }
     @SmallTest
     public void test1(){
-        //Tests the last pname added, which in this case is John Doe
+        //Tests the added, which in this case is John Doe because he is not a critical patient
         TextView pname = (TextView) mFirstTestActivity.findViewById(R.id.pname);
         assertEquals(pname.getText().toString(), "John Doe");
+
     }
 }
