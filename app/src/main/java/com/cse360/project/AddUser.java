@@ -37,7 +37,10 @@ public class AddUser extends Activity {
     private RadioButton rb_doctor, rb_patient;
     private EditText lastname, firstname, password;
     private RadioGroup rg;
-    List<String> doctorList;
+    private List<String> doctorList;
+    private ParseQuery<ParseObject> query;
+    private boolean nonEmpty; //Used for doctor list testing
+    private boolean testFlag = false; //Used for doctor list testing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,22 +63,9 @@ public class AddUser extends Activity {
         rg = (RadioGroup) findViewById(R.id.rg);
         doctorList = new ArrayList<String>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Doctor");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
-                if (e == null) {
-                    Log.d("score", "Retrieved " + parseObjects.size() + " names");
-                    for(int i=0; i<parseObjects.size(); i++){
-                        doctorList.add("Dr. " + parseObjects.get(i).get("first_name")+ " " + parseObjects.get(i).get("last_name"));
-                    }
-                    ArrayAdapter<String> doc_adapter = new ArrayAdapter<String>(getBaseContext(),
-                            android.R.layout.simple_spinner_item, doctorList);
-                    spin_doctor.setAdapter(doc_adapter);
-                } else {
-                    Log.d("score", "Error: " + e.getMessage());
-                }
-            }
-        });
+        query = ParseQuery.getQuery("Doctor");
+        createDoctorList();
+
         //Create array adapter for doctor drop down menu
         SpinnerAdapter mSpinnerAdapter;
         mSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.doctor_array, android.R.layout.simple_spinner_dropdown_item);
@@ -269,6 +259,40 @@ public class AddUser extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.addusermenu, menu);
         return true;
+    }
+
+    public List<String> getDoctorList() { return doctorList; }
+
+    public void setFlag() { testFlag = true; }
+
+
+    public boolean createDoctorList() {
+        query = ParseQuery.getQuery("Doctor");
+        nonEmpty = true;
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                if (e == null) {
+                    //Only for testing; not considered part of implementation
+                    if (testFlag)
+                        parseObjects.clear();
+
+                    Log.d("score", "Retrieved " + parseObjects.size() + " names");
+                    if (parseObjects.size() == 0)
+                        nonEmpty = false;
+                    for(int i=0; i<parseObjects.size(); i++){
+                        doctorList.add("Dr. " + parseObjects.get(i).get("first_name")+ " "
+                                + parseObjects.get(i).get("last_name"));
+                    }
+                    ArrayAdapter<String> doc_adapter = new ArrayAdapter<String>(getBaseContext(),
+                            android.R.layout.simple_spinner_item, doctorList);
+                    spin_doctor.setAdapter(doc_adapter);
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+        return nonEmpty;
     }
 
     @Override
