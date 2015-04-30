@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/pname_side"
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/ps1_side"
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/ps2_side"
@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/ps3_side"
@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/ps4_side"
@@ -115,7 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" >
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/ps5_side"
